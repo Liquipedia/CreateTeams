@@ -14,7 +14,16 @@ $messages[ 'en' ] = array(
 	'createteams' => 'Team templates', // Important! This is the string that appears on Special:SpecialPages
 	'createteams-desc' => 'Allows users to [[Special:CreateTeams|create team templates]]. Original version by hainrich.',
 	
-	'createteams-templates.json' => '{"templates":{"Team":{"wikitext": "[[File:{$image$}|link={$link$}]] {$namewithlink$}","category": "Team Template Standard"},"TeamShort":{"wikitext": "[[File:{$image$}|link={$link$}]] [[{$link$}|{$shortname$}]]","category": "Team Template Short"},"Team2":{"wikitext": "{$namewithlink$} [[File:{$image$}|link={$link$}]]","category": "Team2 Template Standard"},"Team2Short":{"wikitext": "[[{$link$}|{$shortname$}]] [[File:{$image$}|link={$link$}]]","category": "Team2 Template Short"},"TeamBracket":{"wikitext": "[[File:{$image$}|link={$link$}|x18px]] <span style=\\"vertical-align:-1px;\\">{$name$}</span>","category": "Team Template Bracket"},"TeamIcon":{"wikitext": "[[File:{$image$}|link={$link$}]]","category": "Team Template Icons"},"TeamPart":{"wikitext": "<div style=\\"float:right;\\">[[File:{$image$}|link={$link$}]]</div>","category": "Team Template Participants"}}}',
+	'createteams-templates.json' => '{"templates":{'
+		. '"Team":{"wikitext": "<span class=\"team-template-team-standard\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span> <span class=\"team-template-text\">{$namewithlink$}</span></span>","category": "Team Template Standard"},'
+		. '"TeamShort":{"wikitext": "<span class=\"team-template-team-short\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span> <span class=\"team-template-text\">[[{$link$}|{$shortname$}]]</span></span>","category": "Team Template Short"},'
+		. '"Team2":{"wikitext": "<span class=\"team-template-team2-standard\"><span class=\"team-template-text\">{$namewithlink$}</span> <span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></span>","category": "Team2 Template Standard"},'
+		. '"Team2Short":{"wikitext": "<span class=\"team-template-team2-short\"><span class=\"team-template-text\">[[{$link$}|{$shortname$}]]</span> <span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></span>","category": "Team2 Template Short"},'
+		. '"TeamBracket":{"wikitext": "<span class=\"team-template-team-bracket\"><span class=\"team-template-image\">[[File:{$image$}|link=|x18px]]</span> <span class=\"team-template-text\">{$name$}</span></span>","category": "Team Template Bracket"},'
+		. '"TeamIcon":{"wikitext": "<span class=\"team-template-team-icon\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></span>","category": "Team Template Icons"},'
+		. '"TeamPart":{"wikitext": "<div class=\"team-template-team-part\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></div>","category": "Team Template Participants"},'
+		. '"TeamPage":{"wikitext": "{$link$}","category": "Team Template Page"}'
+		. '}}',
 	
 	'createteams-create-teams-heading' => 'Create team templates',
 	'createteams-create-redirects-heading' => 'Create redirects',

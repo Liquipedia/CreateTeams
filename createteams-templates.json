@@ -3,38 +3,43 @@
 	{
 		"Team":
 		{
-			"wikitext": "[[File:{$image$}|link={$link$}]] {$namewithlink$}",
+			"wikitext": "<span class=\"team-template-team-standard\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span> <span class=\"team-template-text\">{$namewithlink$}</span></span>",
 			"category": "Team Template Standard"
 		},
 		"TeamShort":
 		{
-			"wikitext": "[[File:{$image$}|link={$link$}]] [[{$link$}|{$shortname$}]]",
+			"wikitext": "<span class=\"team-template-team-short\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span> <span class=\"team-template-text\">[[{$link$}|{$shortname$}]]</span></span>",
 			"category": "Team Template Short"
 		},
 		"Team2":
 		{
-			"wikitext": "{$namewithlink$} [[File:{$image$}|link={$link$}]]",
+			"wikitext": "<span class=\"team-template-team2-standard\"><span class=\"team-template-text\">{$namewithlink$}</span> <span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></span>",
 			"category": "Team2 Template Standard"
 		},
 		"Team2Short":
 		{
-			"wikitext": "[[{$link$}|{$shortname$}]] [[File:{$image$}|link={$link$}]]",
+			"wikitext": "<span class=\"team-template-team2-short\"><span class=\"team-template-text\">[[{$link$}|{$shortname$}]]</span> <span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></span>",
 			"category": "Team2 Template Short"
 		},
 		"TeamBracket":
 		{
-			"wikitext": "[[File:{$image$}|link={$link$}|x18px]] <span style=\"vertical-align:-1px,\">{$name$}</span>",
+			"wikitext": "<span class=\"team-template-team-bracket\"><span class=\"team-template-image\">[[File:{$image$}|link=|x18px]]</span> <span class=\"team-template-text\">{$name$}</span></span>",
 			"category": "Team Template Bracket"
 		},
 		"TeamIcon":
 		{
-			"wikitext": "[[File:{$image$}|link={$link$}]]",
+			"wikitext": "<span class=\"team-template-team-icon\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></span>",
 			"category": "Team Template Icons"
 		},
 		"TeamPart":
 		{
-			"wikitext": "<div style=\"float:right,\">[[File:{$image$}|link={$link$}]]</div>",
+			"wikitext": "<div class=\"team-template-team-part\"><span class=\"team-template-image\">[[File:{$image$}|link={$link$}]]</span></div>",
 			"category": "Team Template Participants"
+		},
+		"TeamPage":
+		{
+			"wikitext": "{$link$}",
+			"category": "Team Template Page"
 		}
 	}
 }
