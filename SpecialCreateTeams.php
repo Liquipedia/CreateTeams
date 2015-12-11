@@ -99,14 +99,17 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			$wikiimage = 'File:' . $reqImage;
 			$imagetitle = Title::newFromText( $wikiimage );
-			$imagepage = WikiPage::factory( $imagetitle );
+			$imagewikipage = new WikiFilePage( $imagetitle );
+			$imagefile = $imagewikipage->getFile();
+			$test = $imagefile->exists();
 
 			if ( $reqTeam == '' ) {
 				$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->inContentLanguage()->text();
 			} else if ( preg_match( '/[a-z]*:\/\//', $reqTeam ) == 1 ) {
 				$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
-			} else if ( $imagepage->exists() == false ) {
+			} else if ( $imagefile->exists() == false ) {
 				$e = wfMessage( 'createteams-create-teams-error-image-not-found' )->inContentLanguage()->text();
+
 			} else {
 				$lcname = strtolower( $reqTeam );
 
@@ -182,6 +185,8 @@ class SpecialCreateTeams extends SpecialPage
 			if ( $request->getBool( 'createpreviewbutton' ) ) {
 				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
 				$output->addWikiText( $preview );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( $report );
 			} else {
 				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
 				$output->addWikiText( $report );
