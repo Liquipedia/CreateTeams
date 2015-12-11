@@ -17,11 +17,11 @@ $wgExtensionCredits[ 'specialpage' ][] = array(
 	'path' => __FILE__,
 	'name' => 'CreateTeams',
 	'author' => array('hainrich', 'Chapatiyaq'),
-	'url' => 'http://wiki.teamliquid.net/',
+	'url' => 'http://www.tolueno.fr',
 	'descriptionmsg' =>'createteams-desc',
-	'version' => '0.2.0',
+	'version' => '0.2.1',
 );
- 
+
 $wgAutoloadClasses[ 'SpecialCreateTeams' ] = __DIR__ . '/SpecialCreateTeams.php'; # Location of the SpecialCreateTeams class (Tell MediaWiki to load this file)
 $wgExtensionMessagesFiles[ 'CreateTeams' ] = __DIR__ . '/CreateTeams.i18n.php'; # Location of a messages file (Tell MediaWiki to load this file)
 $wgExtensionMessagesFiles[ 'CreateTeamsAlias' ] = __DIR__ . '/CreateTeams.alias.php'; # Location of an aliases file (Tell MediaWiki to load this file)
