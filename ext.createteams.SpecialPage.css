@@ -1,0 +1,52 @@
+form > table td {
+	vertical-align: top;
+}
+
+.input-label {
+	min-width: 13em;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.input-helper {
+	color: #808080;
+	font-style: italic;
+	font-size: .9em;
+	padding-left: .5em;
+}
+
+input[type="checkbox"] {
+	margin-left: 0;
+}
+
+.log {
+	font-size: .9em;
+}
+
+table.createteams-preview {
+	width: 100%;
+}
+
+table.createteams-preview th, td {
+	padding: 2px 8px;
+}
+
+table.createteams-preview th {
+	background: #e8e8e8;
+	width: 1px;
+	white-space: nowrap;
+	text-align: left;
+}
+
+table.createteams-preview td {
+	background: #f1f1f1;
+}
+
+#catlinks {
+	display: none;
+}
+
+.warning {
+	font-size: .9em;
+	color: red;
+}

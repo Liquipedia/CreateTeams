@@ -1,0 +1,40 @@
+{
+	"templates":
+	{
+		"Team":
+		{
+			"wikitext": "[[File:{$image$}|link={$link$}]] {$namewithlink$}",
+			"category": "Team Template Standard"
+		},
+		"TeamShort":
+		{
+			"wikitext": "[[File:{$image$}|link={$link$}]] [[{$link$}|{$shortname$}]]",
+			"category": "Team Template Short"
+		},
+		"Team2":
+		{
+			"wikitext": "{$namewithlink$} [[File:{$image$}|link={$link$}]]",
+			"category": "Team2 Template Standard"
+		},
+		"Team2Short":
+		{
+			"wikitext": "[[{$link$}|{$shortname$}]] [[File:{$image$}|link={$link$}]]",
+			"category": "Team2 Template Short"
+		},
+		"TeamBracket":
+		{
+			"wikitext": "[[File:{$image$}|link={$link$}|x18px]] <span style=\"vertical-align:-1px,\">{$name$}</span>",
+			"category": "Team Template Bracket"
+		},
+		"TeamIcon":
+		{
+			"wikitext": "[[File:{$image$}|link={$link$}]]",
+			"category": "Team Template Icons"
+		},
+		"TeamPart":
+		{
+			"wikitext": "<div style=\"float:right,\">[[File:{$image$}|link={$link$}]]</div>",
+			"category": "Team Template Participants"
+		}
+	}
+}
