@@ -109,7 +109,6 @@ class SpecialCreateTeams extends SpecialPage
 				$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
 			} else if ( $imagefile->exists() == false ) {
 				$e = wfMessage( 'createteams-create-teams-error-image-not-found' )->inContentLanguage()->text();
-
 			} else {
 				$lcname = strtolower( $reqTeam );
 
