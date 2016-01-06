@@ -2,7 +2,7 @@
 # Alert the user that this is not a valid access point to MediaWiki if they try to access the special pages file directly.
 if ( !defined( 'MEDIAWIKI' ) ) {
 	echo <<<EOT
-To install CretaeTeams, put the following line in LocalSettings.php:
+To install CreateTeams, put the following line in LocalSettings.php:
 require_once( "\$IP/extensions/CreateTeams/CreateTeams.php" );
 EOT;
 	exit( 1 );
