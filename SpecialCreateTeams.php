@@ -47,7 +47,12 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addWikiText( '==' . wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text() . '==' );
 		$output->addWikiText( wfMessage( 'createteams-create-teams-desc' )->inContentLanguage()->text() );
 
-		global $wgUser;
+		global $wgUser, $wgUploadNavigationUrl;
+                if($wgUploadNavigationUrl) {
+                    $uploadMessage = wfMessage( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->inContentLanguage()->parse();
+                } else {
+                    $uploadMessage = wfMessage( 'createteams-create-teams-image-helper' )->inContentLanguage()->parse();
+                }
 		$request = $this->getRequest();
 
 		$reqTeam      = $request->getText( 'team' );
@@ -76,7 +81,7 @@ class SpecialCreateTeams extends SpecialPage
 	<tr>
 		<td class="input-label"><label for="image">' . wfMessage( 'createteams-create-teams-image-label' )->inContentLanguage()->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="image" id="image" value="' . $reqImage . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-image-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . $uploadMessage . '</td>
 	</tr>
 	<tr>
 		<td class="input-label"><label for="overwrite">' . wfMessage( 'createteams-create-teams-overwrite-label' )->inContentLanguage()->parse() . '</label></td>
