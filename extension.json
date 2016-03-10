@@ -1,0 +1,47 @@
+{
+	"name": "CreateTeams",
+	"version": "0.3",
+	"author": [
+		"hainrich",
+		"Chapatiyaq",
+		"Alex Winkler"
+	],
+	"url": "http://www.tolueno.fr",
+	"descriptionmsg": "createteams-desc",
+	"license-name": "MIT",
+	"type": "specialpage",
+        "requires": {
+                "MediaWiki": ">= 1.25.0"
+        },
+	"MessagesDirs": {
+		"CreateTeams": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"SpecialCreateTeams": "SpecialCreateTeams.php"
+	},
+	"ExtensionMessagesFiles": {
+		"CreateTeams": "CreateTeams.i18n.php",
+		"CreateTeamsAlias": "CreateTeams.alias.php"
+	},
+	"SpecialPages": {
+		"CreateTeams": "SpecialCreateTeams"
+	},
+	"ResourceModules": {
+		"ext.createteams.SpecialPage": {
+			"styles": [
+				"ext.createteams.SpecialPage.css"
+			],
+			"messages": [
+				"createteams-templates.json"
+			],
+			"position": "top"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "CreateTeams"
+	},
+	"manifest_version": 1
+}
