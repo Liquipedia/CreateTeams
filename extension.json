@@ -22,7 +22,6 @@
 		"SpecialCreateTeams": "SpecialCreateTeams.php"
 	},
 	"ExtensionMessagesFiles": {
-		"CreateTeams": "CreateTeams.i18n.php",
 		"CreateTeamsAlias": "CreateTeams.alias.php"
 	},
 	"SpecialPages": {
