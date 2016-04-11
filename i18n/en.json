@@ -70,5 +70,6 @@
 	"createteams-delete-error-does-not-exist": "[[$1]] does not exist.",
 	"createteams-delete-teams-report-success": "Templates for team $1 deleted!",
 	"createteams-delete-teams-preview-deletion": "[[$1]] will be deleted.",
-	"createteams-delete-teams-warning-deletion": "WARNING: If you click on \"Delete\", the team deleted will be the team on the left of the button, not the team above."
+	"createteams-delete-teams-warning-deletion": "WARNING: If you click on \"Delete\", the team deleted will be the team on the left of the button, not the team above.",
+	"specialpages-group-liquipedia": "Liquipedia"
 }

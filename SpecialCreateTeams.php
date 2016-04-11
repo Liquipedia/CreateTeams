@@ -10,7 +10,7 @@ class SpecialCreateTeams extends SpecialPage
 	}
 	
 	function getGroupName() {
-		return 'pagetools';
+		return 'liquipedia';
 	}
 
 	function getTemplates()
@@ -31,8 +31,7 @@ class SpecialCreateTeams extends SpecialPage
 		return $str;
 	}
 
-	function execute( $par )
-	{
+	function execute( $par ) {
 		if ( !$this->userCanExecute( $this->getUser() ) ) {
 			$this->displayRestrictionError();
 			return;
