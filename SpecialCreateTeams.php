@@ -51,11 +51,11 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addWikiText( wfMessage( 'createteams-create-teams-desc' )->inContentLanguage()->text() );
 
 		global $wgUser, $wgUploadNavigationUrl;
-                if($wgUploadNavigationUrl) {
-                    $uploadMessage = wfMessage( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->inContentLanguage()->parse();
-                } else {
-                    $uploadMessage = wfMessage( 'createteams-create-teams-image-helper' )->inContentLanguage()->parse();
-                }
+		if($wgUploadNavigationUrl) {
+			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->inContentLanguage()->parse();
+		} else {
+			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper' )->inContentLanguage()->parse();
+		}
 		$request = $this->getRequest();
 
 		$reqTeam      = $request->getText( 'team' );
@@ -202,9 +202,9 @@ class SpecialCreateTeams extends SpecialPage
 
 		// Redirects
 
-		$reqRedirect          = $request->getText( 'redirect' );
-		$reqRedirectteam      = $request->getText( 'redirectteam' );
-		$reqRedirectoverwrite = $request->getText( 'redirectoverwrite' );
+		$reqRedirect 		= $request->getText( 'redirect' );
+		$reqRedirectteam 	= $request->getText( 'redirectteam' );
+		$reqRedirectoverwrite 	= $request->getText( 'redirectoverwrite' );
 
 		$output->addWikiText( '==' . wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text() . '==' );
 		$redirectform = '<form name="redirectform" method="post">
