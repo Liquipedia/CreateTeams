@@ -56,9 +56,9 @@
 	"createteams-create-redirects-preview-button": "Preview",
 	"createteams-create-redirects-error-source-or-destination-empty": "Please provide the source and destination of the redirect you want to create.",
 	"createteams-create-redirects-report-success": "Redirects from: $1 to $2 created/edited!",
+
 	"createteams-delete-teams-delete-button": "Delete",
 	"createteams-delete-teams-preview-button": "Preview",
-
 	"createteams-delete-teams-deletepreviewteam-label": "Delete team: ",
 	"createteams-delete-teams-deletepreviewteam-helper": "e.g. \"team solid\"",
 	"createteams-delete-teams-deletebutton-helper": "Preview is required before deletion.",
