@@ -298,6 +298,88 @@ class SpecialCreateTeams extends SpecialPage
 			}
 		}
 
+		// Moves
+
+		$reqMove 		= $request->getText( 'move' );
+		$reqMoveto 	= $request->getText( 'moveto' );
+
+		$output->addWikiText( '==' . wfMessage( 'createteams-move-heading' )->inContentLanguage()->text() . '==' );
+		$moveform = '<form name="moveform" method="post">
+<table>
+	<tr>
+		<td class="input-label"><label for="move">' . wfMessage( 'createteams-move-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="move" id="move" value="' . $reqMove . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-move-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="moveto">' . wfMessage( 'createteams-move-moveto-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="moveto" id="moveto" value="' . $reqMoveto . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-move-moveto-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td colspan="2">
+			<input type="submit" name="movebutton" value="' . wfMessage( 'createteams-move-button' )->inContentLanguage()->text() . '"> 
+			<input type="submit" name="movepreviewbutton" value="' . wfMessage( 'createteams-move-preview-button' )->inContentLanguage()->text() . '">
+		</td>
+	</tr>
+</table>
+</form>';
+
+		$output->addHTML( $moveform );
+		if ( $request->getBool( 'movebutton' ) || $request->getBool( 'movepreviewbutton' ) ) {
+			if ( $reqMove == '' || $reqMoveto == '' ) {
+				$e = wfMessage( 'createteams-move-error-source-or-destination-empty' )->inContentLanguage()->text();
+			} else {
+				$preview = '{| class="createteams-preview"' . "\n";
+				foreach ( array_keys( $this->templates ) as $prefix ) {
+					$oldTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMove ) );
+					$newTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMoveto ) );
+					if ( $request->getBool( 'movepreviewbutton' ) ) {
+						$preview .= '|-' . "\n" . "![[Template:$prefix/" . strtolower( $reqMove ) . ']]' . "\n" . '|&rarr;' . "\n" . "|[[Template:$prefix/" . strtolower( $reqMoveto ) . ']]' . "\n";
+					} else {
+						$errors = $oldTitle->getUserPermissionsErrors( 'move', $wgUser );
+						if ( !$oldTitle->exists() || !$newTitle->exists() ) {
+							$errors = array_merge( $errors, $oldTitle->getUserPermissionsErrors( 'create', $wgUser ) );
+						}
+						if ( count( $errors ) ) {
+							$e .= '*' . wfMessage( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->inContentLanguage()->text() . "\n";
+						} else {
+							if ( !$oldTitle->exists() ) {
+								$e .= '*' . wfMessage( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->inContentLanguage()->text() . "\n";
+							} elseif ( $newTitle->exists() ) {
+								$e .= '*' . wfMessage( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->inContentLanguage()->text() . "\n";
+							} else {
+								$movePage = new MovePage( $oldTitle, $newTitle );
+								$status = $movePage->move( $wgUser, wfMessage( 'createteams-move-summary' )->inContentLanguage()->text(), false );
+								if ( $status->isOK() ) {
+									$log .= '*' . wfMessage( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->inContentLanguage()->text() . "\n";
+								} else {
+									$e .= '*' . wfMessage( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+								}
+							}
+						}
+					}
+				}
+				$preview .= '|}';
+			}
+			if ( $e == '' ) {
+				$report = wfMessage( 'createteams-move-report-success' )
+					->params( array( htmlspecialchars( $reqMove ), htmlspecialchars( $reqMoveto ) ) )
+					->inContentLanguage()->text();
+			} else {
+				$report = $e;
+			}
+			$report .= '<div class="log">' . "\n" . $log . '</div>';
+			if ( $request->getBool( 'movepreviewbutton' ) ) {
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( $preview );
+			} else {
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( $report );
+			}
+		}
+
 		// Deletions
 		if ( $wgUser->isAllowed( 'delete' ) ) {
 			// stuff only admins are allowed to see

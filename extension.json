@@ -1,6 +1,6 @@
 {
 	"name": "CreateTeams",
-	"version": "0.3",
+	"version": "0.4",
 	"author": [
 		"hainrich",
 		"Chapatiyaq",
@@ -10,9 +10,9 @@
 	"descriptionmsg": "createteams-desc",
 	"license-name": "MIT",
 	"type": "specialpage",
-        "requires": {
-                "MediaWiki": ">= 1.25.0"
-        },
+	"requires": {
+		"MediaWiki": ">= 1.25.0"
+	},
 	"MessagesDirs": {
 		"CreateTeams": [
 			"i18n"
