@@ -20,7 +20,7 @@
 	"createteams-create-teams-desc": "Creates team templates as seen [[Liquipedia:Team templates|here]] for a specific team. If no image link is entered, then the image is supposed to be \"Teamlogo std.png\".",
 	"createteams-create-teams-team-label": "Team name: ",
 	"createteams-create-teams-team-helper": "e.g. \"Team Liquid\"",
-	"createteams-create-teams-team-slug-label": "Template suffix: ",
+	"createteams-create-teams-team-slug-label": "Template team name: ",
 	"createteams-create-teams-team-slug-helper": "e.g. \"teamsolid\"<br>If not empty, this defaults to the lowercase version of the team name.",
 	"createteams-create-teams-pagetitle-label": "Team page title: ",
 	"createteams-create-teams-pagetitle-helper": "(Optional) e.g. \"Team Liquid Alternate Page\"<br>If not empty, then the links will go to this page. Leave empty if the page title is the same as the team name.",
