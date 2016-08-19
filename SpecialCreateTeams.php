@@ -59,6 +59,7 @@ class SpecialCreateTeams extends SpecialPage
 		$request = $this->getRequest();
 
 		$reqTeam      = $request->getText( 'team' );
+		$reqTeamslug  = $request->getText( 'teamslug' );
 		$reqPagetitle = $request->getText( 'pagetitle' );
 		$reqImage     = $request->getText( 'image' );
 		$reqTeamshort = $request->getText( 'teamshort' );
@@ -70,6 +71,11 @@ class SpecialCreateTeams extends SpecialPage
 		<td class="input-label"><label for="team">' . wfMessage( 'createteams-create-teams-team-label' )->inContentLanguage()->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="team" id="team" value="' . $reqTeam . '"></td>
 		<td class="input-helper">' . wfMessage( 'createteams-create-teams-team-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="team">' . wfMessage( 'createteams-create-teams-team-slug-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="teamslug" id="teamslug" value="' . $reqTeamslug . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-team-slug-helper' )->inContentLanguage()->parse() . '</td>
 	</tr>
 	<tr>
 		<td class="input-label"><label for="pagetitle">' . wfMessage( 'createteams-create-teams-pagetitle-label' )->inContentLanguage()->parse() . '</label></td>
@@ -119,6 +125,10 @@ class SpecialCreateTeams extends SpecialPage
 				$e = wfMessage( 'createteams-create-teams-error-image-not-found' )->inContentLanguage()->text();
 			} else {
 				$lcname = strtolower( $reqTeam );
+				$lcslug = strtolower( $reqTeamslug );
+				if ( $lcslug != '' ) {
+					$lcname = $lcslug;
+				}
 
 				$vars = array( 
 					'name' => $reqTeam,
