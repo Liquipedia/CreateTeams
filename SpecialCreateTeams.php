@@ -306,55 +306,59 @@ class SpecialCreateTeams extends SpecialPage
 
 		$output->addHTML( $historicalteamform );
 		if ( $request->getBool( 'createhistoricalbutton' ) || $request->getBool( 'createhistoricalpreviewbutton' ) ) {
-			if ( $reqHistoricaltemplate == '' ) {
-				$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->inContentLanguage()->text();
-			} else if ( preg_match( '/[a-z]*:\/\//', $reqHistoricaltemplate ) == 1 ) {
-				$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
-			} else {
-				$lcname = strtolower( $reqHistoricaltemplate );
+			if( $reqHistoricalteamlength == ( $reqHistoricaltimelength + 1 ) ) {
+				if ( $reqHistoricaltemplate == '' ) {
+					$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->inContentLanguage()->text();
+				} else if ( preg_match( '/[a-z]*:\/\//', $reqHistoricaltemplate ) == 1 ) {
+					$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
+				} else {
+					$lcname = strtolower( $reqHistoricaltemplate );
 
-				foreach ( $this->templates as $prefix => $template ) {
-					$contents["Template:$prefix/$lcname"] = self::makeHistoricalTeamTemplate( $prefix, $lcname, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength );
-				}
+					foreach ( $this->templates as $prefix => $template ) {
+						$contents["Template:$prefix/$lcname"] = self::makeHistoricalTeamTemplate( $prefix, $lcname, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength );
+					}
 
-				$preview = '{| class="createteams-preview"' . "\n";
-				foreach ( $contents as $key => $value ) {
-					$title   = Title::newFromText( $key );
-					$page    = WikiPage::factory( $title );
-					$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
-					if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
-						$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
-					} else {
-						$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-						if ( !$title->exists() ) {
-							$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
-						}
-						if ( count( $errors ) ) {
-							$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->inContentLanguage()->text() . "\n";
+					$preview = '{| class="createteams-preview"' . "\n";
+					foreach ( $contents as $key => $value ) {
+						$title   = Title::newFromText( $key );
+						$page    = WikiPage::factory( $title );
+						$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
+						if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
+							$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
 						} else {
-							if ( $title->exists() ) {
-								if ( $reqHistoricaloverwrite ) {
-									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->inContentLanguage()->text(), EDIT_UPDATE, false, $wgUser, null );
-									if ( $status->isOK() ) {
-										$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->inContentLanguage()->text() . "\n";
+							$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+							if ( !$title->exists() ) {
+								$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
+							}
+							if ( count( $errors ) ) {
+								$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->inContentLanguage()->text() . "\n";
+							} else {
+								if ( $title->exists() ) {
+									if ( $reqHistoricaloverwrite ) {
+										$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->inContentLanguage()->text(), EDIT_UPDATE, false, $wgUser, null );
+										if ( $status->isOK() ) {
+											$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->inContentLanguage()->text() . "\n";
+										} else {
+											$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+										}
 									} else {
-										$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+										$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->inContentLanguage()->text() . "\n";
 									}
 								} else {
-									$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->inContentLanguage()->text() . "\n";
-								}
-							} else {
-								$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->inContentLanguage()->text(), EDIT_NEW, false, $wgUser, null );
-								if ( $status->isOK() ) {
-									$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->inContentLanguage()->text() . "\n";
-								} else {
-									$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->inContentLanguage()->text(), EDIT_NEW, false, $wgUser, null );
+									if ( $status->isOK() ) {
+										$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->inContentLanguage()->text() . "\n";
+									} else {
+										$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+									}
 								}
 							}
 						}
 					}
 				}
 				$preview .= '|}';
+			} else {
+				$e .= '*' . wfMessage( 'createteams-create-error-historical-number-error' )->inContentLanguage()->text() . "\n";
 			}
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-create-teams-report-success' )
