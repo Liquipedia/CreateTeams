@@ -32,8 +32,15 @@
 			"styles": [
 				"ext.createteams.SpecialPage.css"
 			],
+			"scripts": [
+				"ext.createteams.SpecialPage.js"
+			],
 			"messages": [
-				"createteams-templates.json"
+				"createteams-templates.json",
+				"createteams-create-teams-historicaltime-label",
+				"createteams-create-teams-historicaltime-helper",
+				"createteams-create-teams-historicalteam-label",
+				"createteams-create-teams-historicalteam-helper"
 			],
 			"position": "top"
 		}

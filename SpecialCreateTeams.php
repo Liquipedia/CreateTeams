@@ -31,6 +31,22 @@ class SpecialCreateTeams extends SpecialPage
 		return $str;
 	}
 
+	function makeHistoricalTeamTemplate( $prefix, $reqHistoricaltemplate, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength ) {
+		$str = '{{#vardefine:' . $reqHistoricaltemplate . 'time|{{#time:U|{{{1|{{#var:date|{{#var:edate|{{#var:sdate|{{CURRENTYEAR}}-{{CURRENTMONTH}}-{{CURRENTDAY2}}}}}}}}}}}}}}}<!-- this variable name needs to be unique --><!--' . "\n";
+		$str .= '-->{{#ifexpr:{{#time:U|' . $reqHistoricaltime[0] . '}} < {{#var:' . $reqHistoricaltemplate . 'time}}|{{' . $prefix . '/' . strtolower( $reqHistoricalteam[0] ) . '}}}}<!--' . "\n";
+			if( $reqHistoricalteamlength > 2) {
+			for($i = 1; $i < $reqHistoricalteamlength - 1; $i++) {
+				if( $reqHistoricaltime[$i - 1] != '' || $reqHistoricalteam[$i] != '' ) {
+					$str .= '-->{{#ifexpr:{{#time:U|' . $reqHistoricaltime[$i - 1] . '}} >= {{#var:' . $reqHistoricaltemplate . 'time}} AND {{#time:U|' . $reqHistoricaltime[$i] . '}} < {{#var:' . $reqHistoricaltemplate . 'time}}|{{' . $prefix . '/' . strtolower( $reqHistoricalteam[$i] ) . '}}}}<!--' . "\n";
+				}
+			}
+		}
+		
+		$str .= '-->{{#ifexpr:{{#time:U|' . $reqHistoricaltime[$reqHistoricaltimelength - 1] . '}} >= {{#var:' . $reqHistoricaltemplate . 'time}}|{{' . $prefix . '/' . strtolower( $reqHistoricalteam[$reqHistoricalteamlength - 1] ) . '}}}}<!--' . "\n";
+		$str .= '--><noinclude>[[Category:Historical ' . $prefix . ' team template]]</noinclude>';
+		return $str;
+	}
+
 	function execute( $par ) {
 		if ( !$this->userCanExecute( $this->getUser() ) ) {
 			$this->displayRestrictionError();
@@ -151,7 +167,6 @@ class SpecialCreateTeams extends SpecialPage
 				foreach ( $this->templates as $prefix => $template ) {
 					$contents["Template:$prefix/$lcname"] = self::makeTeamTemplate( $template, $vars );
 				}
-				//echo print_r( $contents, true );
 
 				$preview = '{| class="createteams-preview"' . "\n";
 				foreach ( $contents as $key => $value ) {
@@ -200,6 +215,155 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'createpreviewbutton' ) ) {
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( $preview );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( $report );
+			} else {
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( $report );
+			}
+		}
+
+		$reqHistoricaltemplate		= $request->getText( 'historicaltemplate' );
+		$reqHistoricalteam		= $request->getArray( 'historicalteam' );
+		$reqHistoricaltime		= $request->getArray( 'historicaltime' );
+		foreach( $reqHistoricalteam as $index => $value ) {
+			if( $value == '') {
+				unset( $reqHistoricalteam[$index] );
+			}
+		}
+		$reqHistoricalteam = array_values( $reqHistoricalteam );
+		foreach( $reqHistoricaltime as $index => $value ) {
+			if( $value == '') {
+				unset( $reqHistoricaltime[$index] );
+			}
+		}
+		$reqHistoricaltime = array_values( $reqHistoricaltime );
+		$reqHistoricalteamlength	= count( $reqHistoricalteam );
+		$reqHistoricaltimelength	= count( $reqHistoricaltime );
+		$reqHistoricaloverwrite		= $request->getBool( 'historicaloverwrite' );
+
+		$output->addWikiText( '==' . wfMessage( 'createteams-create-historicalteam-heading' )->inContentLanguage()->text() . '==' );
+
+		$historicalteamform = '<form name="createhistoricalform" id="createhistoricalform" method="post">
+<table>
+	<tr>
+		<td> </td>
+		<td colspan="2" class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltemplate-info' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="historicaltemplate">' . wfMessage( 'createteams-create-teams-historicaltemplate-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="historicaltemplate" id="historicaltemplate" value="' . $reqHistoricaltemplate . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltemplate-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="historicalteam[]" value="' . $reqHistoricalteam[0] . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="historicaltime">' . wfMessage( 'createteams-create-teams-historicaltime-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="historicaltime[]" value="' . $reqHistoricaltime[0] . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltime-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="historicalteam[]" value="' . $reqHistoricalteam[1] . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>';
+		if( $reqHistoricalteamlength > 2) {
+			for($i = 2; $i < $reqHistoricalteamlength; $i++) {
+				if( $reqHistoricaltime[$i - 1] != '' || $reqHistoricalteam[$i] != '' ) {
+					$historicalteamform .= '<tr>
+						<td class="input-label"><label for="historicaltime">' . wfMessage( 'createteams-create-teams-historicaltime-label' )->inContentLanguage()->parse() . '</label></td>
+						<td class="input-container"><input type="text" name="historicaltime[]" value="' . $reqHistoricaltime[$i - 1] . '"></td>
+						<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltime-helper' )->inContentLanguage()->parse() . '</td>
+					</tr>
+					<tr>
+						<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->inContentLanguage()->parse() . '</label></td>
+						<td class="input-container"><input type="text" name="historicalteam[]" value="' . strtolower( $reqHistoricalteam[$i] ) . '"></td>
+						<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->inContentLanguage()->parse() . '</td>
+					</tr>';
+				}
+			}
+		}
+		$historicalteamform .= '<tr id="historicaloverwriteline">
+		<td class="input-label"><label for="historicaloverwrite">' . wfMessage( 'createteams-create-teams-historicaloverwrite-label' )->inContentLanguage()->parse() . '</label></td>
+		<td><input type="checkbox" name="historicaloverwrite" id="historicaloverwrite"' . ( $reqHistoricaloverwrite ? ' checked=""' : '' ) . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaloverwrite-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td colspan="2">
+			<input type="button" name="createhistoricaladd" id="createhistoricaladd" value="' . wfMessage( 'createteams-create-teams-historicaladd-button' )->inContentLanguage()->text() . '"> 
+			<input type="submit" name="createhistoricalbutton" value="' . wfMessage( 'createteams-create-teams-historicalcreate-button' )->inContentLanguage()->text() . '"> 
+			<input type="submit" name="createhistoricalpreviewbutton" value="' . wfMessage( 'createteams-create-teams-historicalpreview-button' )->inContentLanguage()->text() . '">
+		</td>
+	</tr>
+</table>
+</form>';
+
+		$output->addHTML( $historicalteamform );
+		if ( $request->getBool( 'createhistoricalbutton' ) || $request->getBool( 'createhistoricalpreviewbutton' ) ) {
+			if ( $reqHistoricaltemplate == '' ) {
+				$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->inContentLanguage()->text();
+			} else if ( preg_match( '/[a-z]*:\/\//', $reqHistoricaltemplate ) == 1 ) {
+				$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
+			} else {
+				$lcname = strtolower( $reqHistoricaltemplate );
+
+				foreach ( $this->templates as $prefix => $template ) {
+					$contents["Template:$prefix/$lcname"] = self::makeHistoricalTeamTemplate( $prefix, $lcname, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength );
+				}
+
+				$preview = '{| class="createteams-preview"' . "\n";
+				foreach ( $contents as $key => $value ) {
+					$title   = Title::newFromText( $key );
+					$page    = WikiPage::factory( $title );
+					$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
+					if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
+						$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
+					} else {
+						$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+						if ( !$title->exists() ) {
+							$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
+						}
+						if ( count( $errors ) ) {
+							$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->inContentLanguage()->text() . "\n";
+						} else {
+							if ( $title->exists() ) {
+								if ( $reqHistoricaloverwrite ) {
+									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->inContentLanguage()->text(), EDIT_UPDATE, false, $wgUser, null );
+									if ( $status->isOK() ) {
+										$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->inContentLanguage()->text() . "\n";
+									} else {
+										$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+									}
+								} else {
+									$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->inContentLanguage()->text() . "\n";
+								}
+							} else {
+								$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->inContentLanguage()->text(), EDIT_NEW, false, $wgUser, null );
+								if ( $status->isOK() ) {
+									$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->inContentLanguage()->text() . "\n";
+								} else {
+									$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+								}
+							}
+						}
+					}
+				}
+				$preview .= '|}';
+			}
+			if ( $e == '' ) {
+				$report = wfMessage( 'createteams-create-teams-report-success' )
+					->params( htmlspecialchars($reqTeam) )->inContentLanguage()->text();
+			} else {
+				$report = $e;
+			}
+			$report .= '<div class="log">' . "\n" . $log . '</div>';
+			if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
 				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
 				$output->addWikiText( $preview );
 				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
@@ -310,8 +474,8 @@ class SpecialCreateTeams extends SpecialPage
 
 		// Moves
 
-		$reqMove 		= $request->getText( 'move' );
-		$reqMoveto 	= $request->getText( 'moveto' );
+		$reqMove 	= $request->getText( 'move' );
+		$reqMoveto	= $request->getText( 'moveto' );
 
 		$output->addWikiText( '==' . wfMessage( 'createteams-move-heading' )->inContentLanguage()->text() . '==' );
 		$moveform = '<form name="moveform" method="post">
@@ -391,6 +555,7 @@ class SpecialCreateTeams extends SpecialPage
 		}
 
 		// Deletions
+
 		if ( $wgUser->isAllowed( 'delete' ) ) {
 			// stuff only admins are allowed to see
 			$reqDeletepreviewteam = $request->getText( 'deletepreviewteam' );

@@ -21,7 +21,7 @@
 	"createteams-create-teams-team-label": "Team name: ",
 	"createteams-create-teams-team-helper": "e.g. \"Team Liquid\"",
 	"createteams-create-teams-team-slug-label": "Template team name: ",
-	"createteams-create-teams-team-slug-helper": "e.g. \"teamsolid\"<br>If not empty, this defaults to the lowercase version of the team name.",
+	"createteams-create-teams-team-slug-helper": "e.g. \"teamsolid\"<br>If empty, this defaults to the lowercase version of the team name.",
 	"createteams-create-teams-pagetitle-label": "Team page title: ",
 	"createteams-create-teams-pagetitle-helper": "(Optional) e.g. \"Team Liquid Alternate Page\"<br>If not empty, then the links will go to this page. Leave empty if the page title is the same as the team name.",
 	"createteams-create-teams-teamshort-label": "Team short name: ",
@@ -59,10 +59,10 @@
 	"createteams-create-redirects-error-source-or-destination-empty": "Please provide the source and destination of the redirect you want to create.",
 	"createteams-create-redirects-report-success": "Redirects from: $1 to $2 created/edited!",
 
-	"createteams-move-heading": "Move templates",
+	"createteams-move-heading": "Move team templates",
 	"createteams-move-label": "Move: ",
 	"createteams-move-helper": "e.g. \"tl\" or \"liquid\"",
-	"createteams-move-moveto-label": "to team: ",
+	"createteams-move-moveto-label": "to: ",
 	"createteams-move-moveto-helper": "e.g. \"team liquid\"",
 	"createteams-move-button": "Move templates",
 	"createteams-move-preview-button": "Preview",
@@ -77,7 +77,7 @@
 
 	"createteams-delete-teams-delete-button": "Delete",
 	"createteams-delete-teams-preview-button": "Preview",
-	"createteams-delete-teams-deletepreviewteam-label": "Delete team: ",
+	"createteams-delete-teams-deletepreviewteam-label": "Delete team:",
 	"createteams-delete-teams-deletepreviewteam-helper": "e.g. \"team solid\"",
 	"createteams-delete-teams-deletebutton-helper": "Preview is required before deletion.",
 	"createteams-delete-teams-error-team-name-empty": "Please provide the name of the team.",
@@ -89,6 +89,20 @@
 	"createteams-delete-teams-report-success": "Templates for team $1 deleted!",
 	"createteams-delete-teams-preview-deletion": "[[$1]] will be deleted.",
 	"createteams-delete-teams-warning-deletion": "WARNING: If you click on \"Delete\", the team deleted will be the team on the left of the button, not the team above.",
+
+	"createteams-create-historicalteam-heading": "Create historical team templates",
+	"createteams-create-teams-historicaltemplate-label": "Template name:",
+	"createteams-create-teams-historicaltemplate-helper": "If your template will be at \"Template:Team/team liquid\", put \"team liquid\" here.",
+	"createteams-create-teams-historicalteam-label": "Subtemplate name:",
+	"createteams-create-teams-historicalteam-helper": "This is the subtemplate name, for example if the template name is \"Template:Team/team liquid\", put \"team liquid\" here.",
+	"createteams-create-teams-historicaltime-label": "Template switch time:",
+	"createteams-create-teams-historicaltime-helper": "This is the time the team changed, use the YYYY-MM-DD format here.",
+	"createteams-create-teams-historicaloverwrite-label": "Overwrite if already existing:",
+	"createteams-create-teams-historicaloverwrite-helper": "If checked, then the templates will be overwritten if they already exist.",
+	"createteams-create-teams-historicaladd-button": "+ team",
+	"createteams-create-teams-historicalcreate-button": "Create",
+	"createteams-create-teams-historicalpreview-button": "Preview",
+	"createteams-create-teams-historicaltemplate-info": "Put the teams and dates so that the most recent version is up top.",
 
 	"specialpages-group-liquipedia": "Liquipedia"
 }
