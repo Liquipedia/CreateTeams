@@ -358,7 +358,7 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-create-teams-report-success' )
-					->params( htmlspecialchars($reqTeam) )->inContentLanguage()->text();
+					->params( htmlspecialchars($reqHistoricaltemplate) )->inContentLanguage()->text();
 			} else {
 				$report = $e;
 			}
