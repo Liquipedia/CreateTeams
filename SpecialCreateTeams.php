@@ -228,18 +228,22 @@ class SpecialCreateTeams extends SpecialPage
 		$reqHistoricaltemplate		= $request->getText( 'historicaltemplate' );
 		$reqHistoricalteam		= $request->getArray( 'historicalteam' );
 		$reqHistoricaltime		= $request->getArray( 'historicaltime' );
-		foreach( $reqHistoricalteam as $index => $value ) {
-			if( $value == '') {
-				unset( $reqHistoricalteam[$index] );
+		if( is_array( $reqHistoricalteam ) ) {
+			foreach( $reqHistoricalteam as $index => $value ) {
+				if( $value == '') {
+					unset( $reqHistoricalteam[$index] );
+				}
 			}
+			$reqHistoricalteam = array_values( $reqHistoricalteam );
 		}
-		$reqHistoricalteam = array_values( $reqHistoricalteam );
-		foreach( $reqHistoricaltime as $index => $value ) {
-			if( $value == '') {
-				unset( $reqHistoricaltime[$index] );
+		if( is_array( $reqHistoricaltime ) ) {
+			foreach( $reqHistoricaltime as $index => $value ) {
+				if( $value == '') {
+					unset( $reqHistoricaltime[$index] );
+				}
 			}
+			$reqHistoricaltime = array_values( $reqHistoricaltime );
 		}
-		$reqHistoricaltime = array_values( $reqHistoricaltime );
 		$reqHistoricalteamlength	= count( $reqHistoricalteam );
 		$reqHistoricaltimelength	= count( $reqHistoricaltime );
 		$reqHistoricaloverwrite		= $request->getBool( 'historicaloverwrite' );
