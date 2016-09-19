@@ -8,7 +8,7 @@ class SpecialCreateTeams extends SpecialPage
 	{
 		parent::__construct( 'CreateTeams', 'edit' );
 	}
-	
+
 	function getGroupName() {
 		return 'liquipedia';
 	}
