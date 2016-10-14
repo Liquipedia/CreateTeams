@@ -17,7 +17,7 @@
 			"category": "Team2 Template Short"
 		},
 		"TeamBracket": {
-			"wikitext": "<span data-highlightingclass=\"{$name$}\" class=\"team-template-team-bracket\"><span class=\"team-template-image\">[[File:{$image$}|link=|x18px]]<\/span> <span class=\"team-template-text\">{$name$}<\/span><\/span>",
+			"wikitext": "<span data-highlightingclass=\"{$name$}\" class=\"team-template-team-bracket\"><span class=\"team-template-image\">[[File:{$image$}|link=]]<\/span> <span class=\"team-template-text\">{$name$}<\/span><\/span>",
 			"category": "Team Template Bracket"
 		},
 		"TeamIcon": {
