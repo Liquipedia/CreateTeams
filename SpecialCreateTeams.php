@@ -83,7 +83,6 @@ class SpecialCreateTeams extends SpecialPage
 				'text' => wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text()
 			);
 		}
-
 		$output->addHTML( '<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div><ul>' );
 		foreach( $toc as $tocindex => $tocitem ) {
 			$output->addHTML( '<li class="toclevel-1 tocsection-' . ( $tocindex + 1 ) . '"><a href="#' . $tocitem['href'] . '"><span class="tocnumber">' . ( $tocindex + 1 ) . '</span> <span class="toctext">' . $tocitem['text'] . '</span></a></li>' );
