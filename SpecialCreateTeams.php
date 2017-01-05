@@ -66,7 +66,7 @@ class SpecialCreateTeams extends SpecialPage
 			<li class="toclevel-1 tocsection-3"><a href="#Create_redirects"><span class="tocnumber">3</span> <span class="toctext">' . wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text() . '</span></a></li>
 			<li class="toclevel-1 tocsection-4"><a href="#Move_team_templates"><span class="tocnumber">4</span> <span class="toctext">' . wfMessage( 'createteams-move-heading' )->inContentLanguage()->text() . '</span></a></li>' );
 			if ( $wgUser->isAllowed( 'delete' ) ) {
-				$output->addHTML( '<li class="toclevel-1 tocsection-5"><a href="#Delete_team_templates"><span class="tocnumber">4</span> <span class="toctext">' . wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text() . '</span></a></li>' );
+				$output->addHTML( '<li class="toclevel-1 tocsection-5"><a href="#Delete_team_templates"><span class="tocnumber">5</span> <span class="toctext">' . wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text() . '</span></a></li>' );
 			}
 		$output->addHTML( '</ul>
 		</div>' );
