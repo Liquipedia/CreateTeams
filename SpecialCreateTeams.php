@@ -59,15 +59,35 @@ class SpecialCreateTeams extends SpecialPage
 		$report = ''; $e = ''; $log = ''; $preview = '';
 		$this->getTemplates();
 
-		$output->addHTML( '<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div>
-			<ul>
-			<li class="toclevel-1 tocsection-1"><a href="#Create_team_templates"><span class="tocnumber">1</span> <span class="toctext">' . wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text() . '</span></a></li>
-			<li class="toclevel-1 tocsection-2"><a href="#Create_historical_team_templates"><span class="tocnumber">2</span> <span class="toctext">' . wfMessage( 'createteams-create-historicalteam-heading' )->inContentLanguage()->text() . '</span></a></li>
-			<li class="toclevel-1 tocsection-3"><a href="#Create_redirects"><span class="tocnumber">3</span> <span class="toctext">' . wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text() . '</span></a></li>
-			<li class="toclevel-1 tocsection-4"><a href="#Move_team_templates"><span class="tocnumber">4</span> <span class="toctext">' . wfMessage( 'createteams-move-heading' )->inContentLanguage()->text() . '</span></a></li>' );
-			if ( $wgUser->isAllowed( 'delete' ) ) {
-				$output->addHTML( '<li class="toclevel-1 tocsection-5"><a href="#Delete_team_templates"><span class="tocnumber">5</span> <span class="toctext">' . wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text() . '</span></a></li>' );
-			}
+		$toc = array(
+			array(
+				'href' => 'Create_team_templates',
+				'text' => wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text()
+			),
+			array(
+				'href' => 'Create_historical_team_templates',
+				'text' => wfMessage( 'createteams-create-historicalteam-heading' )->inContentLanguage()->text()
+			),
+			array(
+				'href' => 'Create_redirects',
+				'text' => wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text()
+			),
+			array(
+				'href' => 'Move_team_templates',
+				'text' => wfMessage( 'createteams-move-heading' )->inContentLanguage()->text()
+			),
+		);
+		if ( $wgUser->isAllowed( 'delete' ) ) {
+			$toc[] = array(
+				'href' => 'Delete_team_templates',
+				'text' => wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text()
+			);
+		}
+
+		$output->addHTML( '<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div><ul>' );
+		foreach( $toc as $tocindex => $tocitem ) {
+			$output->addHTML( '<li class="toclevel-1 tocsection-' . ( $tocindex + 1 ) . '"><a href="#' . $tocitem['href'] . '"><span class="tocnumber">' . ( $tocindex + 1 ) . '</span> <span class="toctext">' . $tocitem['text'] . '</span></a></li>' );
+		}
 		$output->addHTML( '</ul>
 		</div>' );
 
