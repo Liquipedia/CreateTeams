@@ -52,11 +52,24 @@ class SpecialCreateTeams extends SpecialPage
 			$this->displayRestrictionError();
 			return;
 		}
+		global $wgUser;
 		$output = $this->getOutput();
 		$this->setHeaders();
 		$output->addModules( 'ext.createteams.SpecialPage' );
 		$report = ''; $e = ''; $log = ''; $preview = '';
 		$this->getTemplates();
+
+		$output->addHTML( '<div id="toc" class="toc"><div id="toctitle"><h2>Contents</h2></div>
+			<ul>
+			<li class="toclevel-1 tocsection-1"><a href="#Create_team_templates"><span class="tocnumber">1</span> <span class="toctext">' . wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text() . '</span></a></li>
+			<li class="toclevel-1 tocsection-2"><a href="#Create_historical_team_templates"><span class="tocnumber">2</span> <span class="toctext">' . wfMessage( 'createteams-create-historicalteam-heading' )->inContentLanguage()->text() . '</span></a></li>
+			<li class="toclevel-1 tocsection-3"><a href="#Create_redirects"><span class="tocnumber">3</span> <span class="toctext">' . wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text() . '</span></a></li>
+			<li class="toclevel-1 tocsection-4"><a href="#Move_team_templates"><span class="tocnumber">4</span> <span class="toctext">' . wfMessage( 'createteams-move-heading' )->inContentLanguage()->text() . '</span></a></li>' );
+			if ( $wgUser->isAllowed( 'delete' ) ) {
+				$output->addHTML( '<li class="toclevel-1 tocsection-5"><a href="#Delete_team_templates"><span class="tocnumber">4</span> <span class="toctext">' . wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text() . '</span></a></li>' );
+			}
+		$output->addHTML( '</ul>
+		</div>' );
 
 		# Get request data from, e.g.
 
@@ -66,7 +79,7 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addWikiText( '==' . wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text() . '==' );
 		$output->addWikiText( wfMessage( 'createteams-create-teams-desc' )->inContentLanguage()->text() );
 
-		global $wgUser, $wgUploadNavigationUrl;
+		global $wgUploadNavigationUrl;
 		if($wgUploadNavigationUrl) {
 			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->inContentLanguage()->parse();
 		} else {
