@@ -32,7 +32,7 @@ class SpecialCreateTeams extends SpecialPage
 	}
 
 	function makeHistoricalTeamTemplate( $prefix, $reqHistoricaltemplate, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength ) {
-		$str = '{{#vardefine:' . $reqHistoricaltemplate . 'time|{{#time:U|{{{1|{{#var:date|{{#var:edate|{{#var:sdate|{{CURRENTYEAR}}-{{CURRENTMONTH}}-{{CURRENTDAY2}}}}}}}}}}}}}}}<!-- this variable name needs to be unique --><!--' . "\n";
+		$str = '{{#vardefine:' . $reqHistoricaltemplate . 'time|{{#time:U|{{{1|{{#replace:{{#replace:{{#explode: {{#var:date|{{#var:edate|{{#var:sdate|{{CURRENTYEAR}}-{{CURRENTMONTH}}-{{CURRENTDAY2}}}}}}}}|<}}|-XX|}}|-??|}}}}}}}}}<!-- this variable name needs to be unique --><!--' . "\n";
 		$str .= '-->{{#ifexpr:{{#time:U|' . $reqHistoricaltime[0] . '}} < {{#var:' . $reqHistoricaltemplate . 'time}}|{{' . $prefix . '/' . strtolower( $reqHistoricalteam[0] ) . '}}}}<!--' . "\n";
 			if( $reqHistoricalteamlength > 2) {
 			for($i = 1; $i < $reqHistoricalteamlength - 1; $i++) {
