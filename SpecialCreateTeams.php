@@ -76,6 +76,10 @@ class SpecialCreateTeams extends SpecialPage
 				'href' => 'Move_team_templates',
 				'text' => wfMessage( 'createteams-move-heading' )->inContentLanguage()->text()
 			),
+			array(
+				'href' => 'View_team_templates',
+				'text' => wfMessage( 'createteams-view-heading' )->inContentLanguage()->text()
+			),
 		);
 		if ( $wgUser->isAllowed( 'delete' ) ) {
 			$toc[] = array(
@@ -592,6 +596,56 @@ class SpecialCreateTeams extends SpecialPage
 				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
 				$output->addWikiText( $report );
 			}
+		}
+
+		// Views
+
+		$reqView 	= $request->getText( 'view' );
+
+		$output->addWikiText( '==' . wfMessage( 'createteams-view-heading' )->inContentLanguage()->text() . '==' );
+		$viewform = '<form name="viewform" method="post">
+<table>
+	<tr>
+		<td class="input-label"><label for="view">' . wfMessage( 'createteams-view-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-container"><input type="text" name="view" id="view" value="' . $reqView . '"></td>
+		<td class="input-helper">' . wfMessage( 'createteams-view-helper' )->inContentLanguage()->parse() . '</td>
+	</tr>
+	<tr>
+		<td> </td>
+		<td colspan="2">
+			<input type="submit" name="viewbutton" value="' . wfMessage( 'createteams-view-button' )->inContentLanguage()->text() . '">
+		</td>
+	</tr>
+</table>
+</form>';
+
+		$output->addHTML( $viewform );
+		if ( $request->getBool( 'viewbutton' ) ) {
+			if ( $reqView == '' ) {
+				$e = wfMessage( 'createteams-view-error-source-empty' )->inContentLanguage()->text();
+			} else {
+				$preview = '{| class="createteams-preview"' . "\n";
+				foreach ( array_keys( $this->templates ) as $prefix ) {
+					$title = Title::newFromText( "Template:$prefix/" . strtolower( $reqView ) );
+					$page  = WikiPage::factory( $title );
+					if ( $page !== null && $page->exists() ) {
+						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|{{Template:' . $prefix . '/' . strtolower( $reqView ) . '}}' . "\n";
+					} else {
+						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|' . wfMessage( 'createteams-view-error-does-not-exist' )->inContentLanguage()->text() . "\n";
+					}
+				}
+				$preview .= '|}';
+			}
+			if ( $e == '' ) {
+				$report = wfMessage( 'createteams-view-report-success' )
+					->params( array( htmlspecialchars( $reqView ) ) )
+					->inContentLanguage()->text();
+			} else {
+				$report = $e;
+			}
+			$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+			$output->addWikiText( $report );
+			$output->addWikiText( $preview );
 		}
 
 		// Deletions
