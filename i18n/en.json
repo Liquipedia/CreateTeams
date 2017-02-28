@@ -80,7 +80,7 @@
 	"createteams-view-helper": "e.g. \"team liquid\"",
 	"createteams-view-button": "View templates",
 	"createteams-view-error-source-empty": "Please provide the name of the template to show.",
-	"createteams-view-report-success": "Showing templates for name $1!",
+	"createteams-view-report-success": "Showing templates for name \"$1\"!",
 	"createteams-view-error-does-not-exist": "This template does not exist!",
 
 	"createteams-delete-teams-delete-button": "Delete",
