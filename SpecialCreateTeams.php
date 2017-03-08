@@ -62,32 +62,32 @@ class SpecialCreateTeams extends SpecialPage
 		$toc = array(
 			array(
 				'href' => 'Create_team_templates',
-				'text' => wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text()
+				'text' => wfMessage( 'createteams-create-teams-heading' )->text()
 			),
 			array(
 				'href' => 'Create_historical_team_templates',
-				'text' => wfMessage( 'createteams-create-historicalteam-heading' )->inContentLanguage()->text()
+				'text' => wfMessage( 'createteams-create-historicalteam-heading' )->text()
 			),
 			array(
 				'href' => 'Create_redirects',
-				'text' => wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text()
+				'text' => wfMessage( 'createteams-create-redirects-heading' )->text()
 			),
 			array(
 				'href' => 'Move_team_templates',
-				'text' => wfMessage( 'createteams-move-heading' )->inContentLanguage()->text()
+				'text' => wfMessage( 'createteams-move-heading' )->text()
 			),
 			array(
 				'href' => 'View_team_templates',
-				'text' => wfMessage( 'createteams-view-heading' )->inContentLanguage()->text()
+				'text' => wfMessage( 'createteams-view-heading' )->text()
 			),
 		);
 		if ( $wgUser->isAllowed( 'delete' ) ) {
 			$toc[] = array(
 				'href' => 'Delete_team_templates',
-				'text' => wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text()
+				'text' => wfMessage( 'createteams-delete-teams-heading' )->text()
 			);
 		}
-		$output->addHTML( '<div id="toc" class="toc"><div id="toctitle"><h2>' . wfMessage( 'toc' )->inContentLanguage()->text() . '</h2></div><ul>' );
+		$output->addHTML( '<div id="toc" class="toc"><div id="toctitle"><h2>' . wfMessage( 'toc' )->text() . '</h2></div><ul>' );
 		foreach( $toc as $tocindex => $tocitem ) {
 			$output->addHTML( '<li class="toclevel-1 tocsection-' . ( $tocindex + 1 ) . '"><a href="#' . $tocitem['href'] . '"><span class="tocnumber">' . ( $tocindex + 1 ) . '</span> <span class="toctext">' . $tocitem['text'] . '</span></a></li>' );
 		}
@@ -99,14 +99,14 @@ class SpecialCreateTeams extends SpecialPage
 		# Do stuff
 		# ...
 		//$wgOut->setPageTitle( "create team templates" );
-		$output->addWikiText( '==' . wfMessage( 'createteams-create-teams-heading' )->inContentLanguage()->text() . '==' );
-		$output->addWikiText( wfMessage( 'createteams-create-teams-desc' )->inContentLanguage()->text() );
+		$output->addWikiText( '==' . wfMessage( 'createteams-create-teams-heading' )->text() . '==' );
+		$output->addWikiText( wfMessage( 'createteams-create-teams-desc' )->text() );
 
 		global $wgUploadNavigationUrl;
 		if($wgUploadNavigationUrl) {
-			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->inContentLanguage()->parse();
+			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->parse();
 		} else {
-			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper' )->inContentLanguage()->parse();
+			$uploadMessage = wfMessage( 'createteams-create-teams-image-helper' )->parse();
 		}
 		$request = $this->getRequest();
 
@@ -120,40 +120,40 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addHTML( '<form name="createform" id="createform" method="post">
 <table>
 	<tr>
-		<td class="input-label"><label for="team">' . wfMessage( 'createteams-create-teams-team-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="team">' . wfMessage( 'createteams-create-teams-team-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="team" id="team" value="' . $reqTeam . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-team-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-team-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="team">' . wfMessage( 'createteams-create-teams-team-slug-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="team">' . wfMessage( 'createteams-create-teams-team-slug-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="teamslug" id="teamslug" value="' . $reqTeamslug . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-team-slug-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-team-slug-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="pagetitle">' . wfMessage( 'createteams-create-teams-pagetitle-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="pagetitle">' . wfMessage( 'createteams-create-teams-pagetitle-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="pagetitle" id="pagetitle" value="' . $reqPagetitle . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-pagetitle-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-pagetitle-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="teamshort">' . wfMessage( 'createteams-create-teams-teamshort-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="teamshort">' . wfMessage( 'createteams-create-teams-teamshort-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="teamshort" id="teamshort" value="' . $reqTeamshort . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-teamshort-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-teamshort-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="image">' . wfMessage( 'createteams-create-teams-image-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="image">' . wfMessage( 'createteams-create-teams-image-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="image" id="image" value="' . $reqImage . '"></td>
 		<td class="input-helper">' . $uploadMessage . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="overwrite">' . wfMessage( 'createteams-create-teams-overwrite-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="overwrite">' . wfMessage( 'createteams-create-teams-overwrite-label' )->parse() . '</label></td>
 		<td><input type="checkbox" name="overwrite" id="overwrite"' . ( $reqOverwrite ? ' checked=""' : '' ) . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-overwrite-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-overwrite-helper' )->parse() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
 		<td colspan="2">
-			<input type="submit" name="createbutton" value="' . wfMessage( 'createteams-create-teams-create-button' )->inContentLanguage()->text() . '"> 
-			<input type="submit" name="createpreviewbutton" value="' . wfMessage( 'createteams-create-teams-preview-button' )->inContentLanguage()->text() . '">
+			<input type="submit" name="createbutton" value="' . wfMessage( 'createteams-create-teams-create-button' )->text() . '"> 
+			<input type="submit" name="createpreviewbutton" value="' . wfMessage( 'createteams-create-teams-preview-button' )->text() . '">
 		</td>
 	</tr>
 </table>
@@ -170,11 +170,11 @@ class SpecialCreateTeams extends SpecialPage
 			$test = $imagefile->exists();
 
 			if ( $reqTeam == '' ) {
-				$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->inContentLanguage()->text();
+				$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->text();
 			} else if ( preg_match( '/[a-z]*:\/\//', $reqTeam ) == 1 ) {
-				$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
+				$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->text();
 			} else if ( $imagefile->exists() == false ) {
-				$e = wfMessage( 'createteams-create-teams-error-image-not-found' )->inContentLanguage()->text();
+				$e = wfMessage( 'createteams-create-teams-error-image-not-found' )->text();
 			} else {
 				$lcname = strtolower( $reqTeam );
 				$lcslug = strtolower( $reqTeamslug );
@@ -217,25 +217,25 @@ class SpecialCreateTeams extends SpecialPage
 							$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
 						}
 						if ( count( $errors ) ) {
-							$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->inContentLanguage()->text() . "\n";
+							$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
 						} else {
 							if ( $title->exists() ) {
 								if ( $reqOverwrite ) {
-									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->inContentLanguage()->text(), EDIT_UPDATE, false, $wgUser, null );
+									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
 									if ( $status->isOK() ) {
-										$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->inContentLanguage()->text() . "\n";
+										$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
 									} else {
-										$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+										$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
 									}
 								} else {
-									$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->inContentLanguage()->text() . "\n";
+									$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 								}
 							} else {
-								$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->inContentLanguage()->text(), EDIT_NEW, false, $wgUser, null );
+								$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
 								if ( $status->isOK() ) {
-									$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->inContentLanguage()->text() . "\n";
+									$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
 								} else {
-									$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+									$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
 								}
 							}
 						}
@@ -245,18 +245,18 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-create-teams-report-success' )
-					->params( htmlspecialchars($reqTeam) )->inContentLanguage()->text();
+					->params( htmlspecialchars($reqTeam) )->text();
 			} else {
 				$report = $e;
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'createpreviewbutton' ) ) {
-				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->text() . '===' );
 				$output->addWikiText( $preview );
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			} else {
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -284,61 +284,61 @@ class SpecialCreateTeams extends SpecialPage
 		$reqHistoricaltimelength	= count( $reqHistoricaltime );
 		$reqHistoricaloverwrite		= $request->getBool( 'historicaloverwrite' );
 
-		$output->addWikiText( '==' . wfMessage( 'createteams-create-historicalteam-heading' )->inContentLanguage()->text() . '==' );
+		$output->addWikiText( '==' . wfMessage( 'createteams-create-historicalteam-heading' )->text() . '==' );
 
 		$historicalteamform = '<form name="createhistoricalform" id="createhistoricalform" method="post">
 <table>
 	<tr>
 		<td> </td>
-		<td colspan="2" class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltemplate-info' )->inContentLanguage()->parse() . '</td>
+		<td colspan="2" class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltemplate-info' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="historicaltemplate">' . wfMessage( 'createteams-create-teams-historicaltemplate-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="historicaltemplate">' . wfMessage( 'createteams-create-teams-historicaltemplate-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="historicaltemplate" id="historicaltemplate" value="' . $reqHistoricaltemplate . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltemplate-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltemplate-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="historicalteam[]" value="' . $reqHistoricalteam[0] . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="historicaltime">' . wfMessage( 'createteams-create-teams-historicaltime-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="historicaltime">' . wfMessage( 'createteams-create-teams-historicaltime-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="historicaltime[]" value="' . $reqHistoricaltime[0] . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltime-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltime-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="historicalteam[]" value="' . $reqHistoricalteam[1] . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->parse() . '</td>
 	</tr>';
 		if( $reqHistoricalteamlength > 2) {
 			for($i = 2; $i < $reqHistoricalteamlength; $i++) {
 				if( $reqHistoricaltime[$i - 1] != '' || $reqHistoricalteam[$i] != '' ) {
 					$historicalteamform .= '<tr>
-						<td class="input-label"><label for="historicaltime">' . wfMessage( 'createteams-create-teams-historicaltime-label' )->inContentLanguage()->parse() . '</label></td>
+						<td class="input-label"><label for="historicaltime">' . wfMessage( 'createteams-create-teams-historicaltime-label' )->parse() . '</label></td>
 						<td class="input-container"><input type="text" name="historicaltime[]" value="' . $reqHistoricaltime[$i - 1] . '"></td>
-						<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltime-helper' )->inContentLanguage()->parse() . '</td>
+						<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaltime-helper' )->parse() . '</td>
 					</tr>
 					<tr>
-						<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->inContentLanguage()->parse() . '</label></td>
+						<td class="input-label"><label for="historicalteam">' . wfMessage( 'createteams-create-teams-historicalteam-label' )->parse() . '</label></td>
 						<td class="input-container"><input type="text" name="historicalteam[]" value="' . strtolower( $reqHistoricalteam[$i] ) . '"></td>
-						<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->inContentLanguage()->parse() . '</td>
+						<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicalteam-helper' )->parse() . '</td>
 					</tr>';
 				}
 			}
 		}
 		$historicalteamform .= '<tr id="historicaloverwriteline">
-		<td class="input-label"><label for="historicaloverwrite">' . wfMessage( 'createteams-create-teams-historicaloverwrite-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="historicaloverwrite">' . wfMessage( 'createteams-create-teams-historicaloverwrite-label' )->parse() . '</label></td>
 		<td><input type="checkbox" name="historicaloverwrite" id="historicaloverwrite"' . ( $reqHistoricaloverwrite ? ' checked=""' : '' ) . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaloverwrite-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-teams-historicaloverwrite-helper' )->parse() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
 		<td colspan="2">
-			<input type="button" name="createhistoricaladd" id="createhistoricaladd" value="' . wfMessage( 'createteams-create-teams-historicaladd-button' )->inContentLanguage()->text() . '"> 
-			<input type="submit" name="createhistoricalbutton" value="' . wfMessage( 'createteams-create-teams-historicalcreate-button' )->inContentLanguage()->text() . '"> 
-			<input type="submit" name="createhistoricalpreviewbutton" value="' . wfMessage( 'createteams-create-teams-historicalpreview-button' )->inContentLanguage()->text() . '">
+			<input type="button" name="createhistoricaladd" id="createhistoricaladd" value="' . wfMessage( 'createteams-create-teams-historicaladd-button' )->text() . '"> 
+			<input type="submit" name="createhistoricalbutton" value="' . wfMessage( 'createteams-create-teams-historicalcreate-button' )->text() . '"> 
+			<input type="submit" name="createhistoricalpreviewbutton" value="' . wfMessage( 'createteams-create-teams-historicalpreview-button' )->text() . '">
 		</td>
 	</tr>
 </table>
@@ -348,9 +348,9 @@ class SpecialCreateTeams extends SpecialPage
 		if ( $request->getBool( 'createhistoricalbutton' ) || $request->getBool( 'createhistoricalpreviewbutton' ) ) {
 			if( $reqHistoricalteamlength == ( $reqHistoricaltimelength + 1 ) ) {
 				if ( $reqHistoricaltemplate == '' ) {
-					$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->inContentLanguage()->text();
+					$e = wfMessage( 'createteams-create-teams-error-team-name-empty' )->text();
 				} else if ( preg_match( '/[a-z]*:\/\//', $reqHistoricaltemplate ) == 1 ) {
-					$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->inContentLanguage()->text();
+					$e = wfMessage( 'createteams-create-teams-error-team-name-url' )->text();
 				} else {
 					$lcname = strtolower( $reqHistoricaltemplate );
 
@@ -371,25 +371,25 @@ class SpecialCreateTeams extends SpecialPage
 								$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
 							}
 							if ( count( $errors ) ) {
-								$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->inContentLanguage()->text() . "\n";
+								$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
 							} else {
 								if ( $title->exists() ) {
 									if ( $reqHistoricaloverwrite ) {
-										$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->inContentLanguage()->text(), EDIT_UPDATE, false, $wgUser, null );
+										$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
 										if ( $status->isOK() ) {
-											$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->inContentLanguage()->text() . "\n";
+											$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
 										} else {
-											$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+											$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
 										}
 									} else {
-										$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->inContentLanguage()->text() . "\n";
+										$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 									}
 								} else {
-									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->inContentLanguage()->text(), EDIT_NEW, false, $wgUser, null );
+									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
 									if ( $status->isOK() ) {
-										$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->inContentLanguage()->text() . "\n";
+										$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
 									} else {
-										$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+										$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
 									}
 								}
 							}
@@ -398,22 +398,22 @@ class SpecialCreateTeams extends SpecialPage
 				}
 				$preview .= '|}';
 			} else {
-				$e .= '*' . wfMessage( 'createteams-create-error-historical-number-error' )->inContentLanguage()->text() . "\n";
+				$e .= '*' . wfMessage( 'createteams-create-error-historical-number-error' )->text() . "\n";
 			}
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-create-teams-report-success' )
-					->params( htmlspecialchars($reqHistoricaltemplate) )->inContentLanguage()->text();
+					->params( htmlspecialchars($reqHistoricaltemplate) )->text();
 			} else {
 				$report = $e;
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
-				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->text() . '===' );
 				$output->addWikiText( $preview );
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			} else {
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -424,29 +424,29 @@ class SpecialCreateTeams extends SpecialPage
 		$reqRedirectteam 	= $request->getText( 'redirectteam' );
 		$reqRedirectoverwrite 	= $request->getText( 'redirectoverwrite' );
 
-		$output->addWikiText( '==' . wfMessage( 'createteams-create-redirects-heading' )->inContentLanguage()->text() . '==' );
+		$output->addWikiText( '==' . wfMessage( 'createteams-create-redirects-heading' )->text() . '==' );
 		$redirectform = '<form name="redirectform" method="post">
 <table>
 	<tr>
-		<td class="input-label"><label for="redirect">' . wfMessage( 'createteams-create-redirects-redirect-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="redirect">' . wfMessage( 'createteams-create-redirects-redirect-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="redirect" id="redirect" value="' . $reqRedirect . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-redirects-redirect-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-redirects-redirect-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="redirectteam">' . wfMessage( 'createteams-create-redirects-redirectteam-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="redirectteam">' . wfMessage( 'createteams-create-redirects-redirectteam-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="redirectteam" id="redirectteam" value="' . $reqRedirectteam . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-redirects-redirectteam-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-redirects-redirectteam-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="redirectoverwrite">' . wfMessage( 'createteams-create-redirects-redirectoverwrite-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="redirectoverwrite">' . wfMessage( 'createteams-create-redirects-redirectoverwrite-label' )->parse() . '</label></td>
 		<td><input type="checkbox" name="redirectoverwrite" id="redirectoverwrite"' . ( $reqRedirectoverwrite ? ' checked=""' : '' ) . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-create-redirects-redirectoverwrite-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-create-redirects-redirectoverwrite-helper' )->parse() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
 		<td colspan="2">
-			<input type="submit" name="redirectbutton" value="' . wfMessage( 'createteams-create-redirects-create-button' )->inContentLanguage()->text() . '"> 
-			<input type="submit" name="redirectpreviewbutton" value="' . wfMessage( 'createteams-create-redirects-preview-button' )->inContentLanguage()->text() . '">
+			<input type="submit" name="redirectbutton" value="' . wfMessage( 'createteams-create-redirects-create-button' )->text() . '"> 
+			<input type="submit" name="redirectpreviewbutton" value="' . wfMessage( 'createteams-create-redirects-preview-button' )->text() . '">
 		</td>
 	</tr>
 </table>
@@ -455,7 +455,7 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addHTML( $redirectform );
 		if ( $request->getBool( 'redirectbutton' ) || $request->getBool( 'redirectpreviewbutton' ) ) {
 			if ( $reqRedirect == '' || $reqRedirectteam == '' ) {
-				$e = wfMessage( 'createteams-create-redirects-error-source-or-destination-empty' )->inContentLanguage()->text();
+				$e = wfMessage( 'createteams-create-redirects-error-source-or-destination-empty' )->text();
 			} else {
 				foreach ( array_keys( $this->templates ) as $prefix ) {
 					$contents[ "Template:$prefix/" . strtolower( $reqRedirect ) ] = "#REDIRECT [[Template:$prefix/" . strtolower( $reqRedirectteam ) . "]]";
@@ -473,25 +473,25 @@ class SpecialCreateTeams extends SpecialPage
 							$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
 						}
 						if ( count( $errors ) ) {
-							$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->inContentLanguage()->text() . "\n";
+							$e .= '*' . wfMessage( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
 						} else {
 							if ( $title->exists() ) {
 								if ( $reqRedirectoverwrite ) {
-									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->inContentLanguage()->text(), EDIT_UPDATE, false, $wgUser, null );
+									$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
 									if ( $status->isOK() ) {
-										$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->inContentLanguage()->text() . "\n";
+										$log .= '*' . wfMessage( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
 									} else {
-										$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+										$e .= '*' . wfMessage( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
 									}
 								} else {
-									$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->inContentLanguage()->text() . "\n";
+									$e .= '*' . wfMessage( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 								}
 							} else {
-								$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->inContentLanguage()->text(), EDIT_NEW, false, $wgUser, null );
+								$status = $page->doeditcontent( $content, wfMessage( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
 								if ( $status->isOK() ) {
-									$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->inContentLanguage()->text() . "\n";
+									$log .= '*' . wfMessage( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
 								} else {
-									$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+									$e .= '*' . wfMessage( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
 								}
 							}
 						}
@@ -502,16 +502,16 @@ class SpecialCreateTeams extends SpecialPage
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-create-redirects-report-success' )
 					->params( array( htmlspecialchars( $reqRedirect ), htmlspecialchars( $reqRedirectteam ) ) )
-					->inContentLanguage()->text();
+					->text();
 			} else {
 				$report = $e;
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'redirectpreviewbutton' ) ) {
-				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->text() . '===' );
 				$output->addWikiText( $preview );
 			} else {
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -521,24 +521,24 @@ class SpecialCreateTeams extends SpecialPage
 		$reqMove 	= $request->getText( 'move' );
 		$reqMoveto	= $request->getText( 'moveto' );
 
-		$output->addWikiText( '==' . wfMessage( 'createteams-move-heading' )->inContentLanguage()->text() . '==' );
+		$output->addWikiText( '==' . wfMessage( 'createteams-move-heading' )->text() . '==' );
 		$moveform = '<form name="moveform" method="post">
 <table>
 	<tr>
-		<td class="input-label"><label for="move">' . wfMessage( 'createteams-move-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="move">' . wfMessage( 'createteams-move-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="move" id="move" value="' . $reqMove . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-move-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-move-helper' )->parse() . '</td>
 	</tr>
 	<tr>
-		<td class="input-label"><label for="moveto">' . wfMessage( 'createteams-move-moveto-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="moveto">' . wfMessage( 'createteams-move-moveto-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="moveto" id="moveto" value="' . $reqMoveto . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-move-moveto-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-move-moveto-helper' )->parse() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
 		<td colspan="2">
-			<input type="submit" name="movebutton" value="' . wfMessage( 'createteams-move-button' )->inContentLanguage()->text() . '"> 
-			<input type="submit" name="movepreviewbutton" value="' . wfMessage( 'createteams-move-preview-button' )->inContentLanguage()->text() . '">
+			<input type="submit" name="movebutton" value="' . wfMessage( 'createteams-move-button' )->text() . '"> 
+			<input type="submit" name="movepreviewbutton" value="' . wfMessage( 'createteams-move-preview-button' )->text() . '">
 		</td>
 	</tr>
 </table>
@@ -547,7 +547,7 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addHTML( $moveform );
 		if ( $request->getBool( 'movebutton' ) || $request->getBool( 'movepreviewbutton' ) ) {
 			if ( $reqMove == '' || $reqMoveto == '' ) {
-				$e = wfMessage( 'createteams-move-error-source-or-destination-empty' )->inContentLanguage()->text();
+				$e = wfMessage( 'createteams-move-error-source-or-destination-empty' )->text();
 			} else {
 				$preview = '{| class="createteams-preview"' . "\n";
 				foreach ( array_keys( $this->templates ) as $prefix ) {
@@ -561,19 +561,19 @@ class SpecialCreateTeams extends SpecialPage
 							$errors = array_merge( $errors, $oldTitle->getUserPermissionsErrors( 'create', $wgUser ) );
 						}
 						if ( count( $errors ) ) {
-							$e .= '*' . wfMessage( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->inContentLanguage()->text() . "\n";
+							$e .= '*' . wfMessage( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 						} else {
 							if ( !$oldTitle->exists() ) {
-								$e .= '*' . wfMessage( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->inContentLanguage()->text() . "\n";
+								$e .= '*' . wfMessage( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 							} elseif ( $newTitle->exists() ) {
-								$e .= '*' . wfMessage( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->inContentLanguage()->text() . "\n";
+								$e .= '*' . wfMessage( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
 							} else {
 								$movePage = new MovePage( $oldTitle, $newTitle );
-								$status = $movePage->move( $wgUser, wfMessage( 'createteams-move-summary' )->inContentLanguage()->text(), false );
+								$status = $movePage->move( $wgUser, wfMessage( 'createteams-move-summary' )->text(), false );
 								if ( $status->isOK() ) {
-									$log .= '*' . wfMessage( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->inContentLanguage()->text() . "\n";
+									$log .= '*' . wfMessage( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
 								} else {
-									$e .= '*' . wfMessage( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->inContentLanguage()->text() . $status->getWikiText() . "\n";
+									$e .= '*' . wfMessage( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
 								}
 							}
 						}
@@ -584,16 +584,16 @@ class SpecialCreateTeams extends SpecialPage
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-move-report-success' )
 					->params( array( htmlspecialchars( $reqMove ), htmlspecialchars( $reqMoveto ) ) )
-					->inContentLanguage()->text();
+					->text();
 			} else {
 				$report = $e;
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'movepreviewbutton' ) ) {
-				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->text() . '===' );
 				$output->addWikiText( $preview );
 			} else {
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -602,18 +602,18 @@ class SpecialCreateTeams extends SpecialPage
 
 		$reqView 	= $request->getText( 'view' );
 
-		$output->addWikiText( '==' . wfMessage( 'createteams-view-heading' )->inContentLanguage()->text() . '==' );
+		$output->addWikiText( '==' . wfMessage( 'createteams-view-heading' )->text() . '==' );
 		$viewform = '<form name="viewform" method="post">
 <table>
 	<tr>
-		<td class="input-label"><label for="view">' . wfMessage( 'createteams-view-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="view">' . wfMessage( 'createteams-view-label' )->parse() . '</label></td>
 		<td class="input-container"><input type="text" name="view" id="view" value="' . $reqView . '"></td>
-		<td class="input-helper">' . wfMessage( 'createteams-view-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-view-helper' )->parse() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
 		<td colspan="2">
-			<input type="submit" name="viewbutton" value="' . wfMessage( 'createteams-view-button' )->inContentLanguage()->text() . '">
+			<input type="submit" name="viewbutton" value="' . wfMessage( 'createteams-view-button' )->text() . '">
 		</td>
 	</tr>
 </table>
@@ -622,7 +622,7 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addHTML( $viewform );
 		if ( $request->getBool( 'viewbutton' ) ) {
 			if ( $reqView == '' ) {
-				$e = wfMessage( 'createteams-view-error-source-empty' )->inContentLanguage()->text();
+				$e = wfMessage( 'createteams-view-error-source-empty' )->text();
 			} else {
 				$preview = '{| class="createteams-preview"' . "\n";
 				foreach ( array_keys( $this->templates ) as $prefix ) {
@@ -631,7 +631,7 @@ class SpecialCreateTeams extends SpecialPage
 					if ( $page !== null && $page->exists() ) {
 						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|{{Template:' . $prefix . '/' . strtolower( $reqView ) . '}}' . "\n";
 					} else {
-						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|' . wfMessage( 'createteams-view-error-does-not-exist' )->inContentLanguage()->text() . "\n";
+						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|' . wfMessage( 'createteams-view-error-does-not-exist' )->text() . "\n";
 					}
 				}
 				$preview .= '|}';
@@ -639,11 +639,11 @@ class SpecialCreateTeams extends SpecialPage
 			if ( $e == '' ) {
 				$report = wfMessage( 'createteams-view-report-success' )
 					->params( array( htmlspecialchars( $reqView ) ) )
-					->inContentLanguage()->text();
+					->text();
 			} else {
 				$report = $e;
 			}
-			$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+			$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->text() . '===' );
 			$output->addWikiText( $report );
 			$output->addWikiText( $preview );
 		}
@@ -654,22 +654,22 @@ class SpecialCreateTeams extends SpecialPage
 			// stuff only admins are allowed to see
 			$reqDeletepreviewteam = $request->getText( 'deletepreviewteam' );
 			$reqDeleteteam = $request->getText( 'deleteteam' );
-			$output->addWikiText( '==' . wfMessage( 'createteams-delete-teams-heading' )->inContentLanguage()->text() . '==' );
+			$output->addWikiText( '==' . wfMessage( 'createteams-delete-teams-heading' )->text() . '==' );
 			$deleteForm = '<form name="delete-form" method="post">
 <table>
 	<tr>
-		<td class="input-label"><label for="deletepreviewteam">' . wfMessage( 'createteams-delete-teams-deletepreviewteam-label' )->inContentLanguage()->parse() . '</label></td>
+		<td class="input-label"><label for="deletepreviewteam">' . wfMessage( 'createteams-delete-teams-deletepreviewteam-label' )->parse() . '</label></td>
 		<td class="input-container">
 			<input type="text" name="deletepreviewteam" id="deletepreviewteam" value="' . $reqDeletepreviewteam . '">
 		</td>
-		<td class="input-helper">' . wfMessage( 'createteams-delete-teams-deletepreviewteam-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-delete-teams-deletepreviewteam-helper' )->parse() . '</td>
 	</tr>
 	<tr>
 		<td> </td>
 		<td>
-			<input type="submit" name="deletepreviewbutton" value="' . wfMessage( 'createteams-delete-teams-preview-button' )->inContentLanguage()->text() . '">
+			<input type="submit" name="deletepreviewbutton" value="' . wfMessage( 'createteams-delete-teams-preview-button' )->text() . '">
 		</td>
-		<td class="input-helper">' . wfMessage( 'createteams-delete-teams-deletebutton-helper' )->inContentLanguage()->parse() . '</td>
+		<td class="input-helper">' . wfMessage( 'createteams-delete-teams-deletebutton-helper' )->parse() . '</td>
 	</tr>
 </table>
 </form>';
@@ -677,7 +677,7 @@ class SpecialCreateTeams extends SpecialPage
 
 			if ( $request->getBool( 'deletebutton' ) ) {
 				if ( $reqDeleteteam == '' ) {
-					$e = wfMessage( 'createteams-delete-teams-error-team-name-empty' )->inContentLanguage()->text();
+					$e = wfMessage( 'createteams-delete-teams-error-team-name-empty' )->text();
 				} else {
 					foreach ( array_keys( $this->templates ) as $prefix ) {
 						$deltemplate[ $prefix ] = "Template:$prefix/" . strtolower( $reqDeleteteam );
@@ -688,31 +688,31 @@ class SpecialCreateTeams extends SpecialPage
 						$id    = $page->getId();
 						$errors = $title->getUserPermissionsErrors( 'delete', $wgUser );
 						if (count($errors)) {
-							$e .= '*' . wfMessage( 'createteams-delete-error-permission' )->params( $value )->inContentLanguage()->text() . "\n";
+							$e .= '*' . wfMessage( 'createteams-delete-error-permission' )->params( $value )->text() . "\n";
 						} else if ( !$title->exists() ) {
-							$e .= '*' . wfMessage( 'createteams-delete-error-does-not-exist' )->params( $value )->inContentLanguage()->text() . "\n";
+							$e .= '*' . wfMessage( 'createteams-delete-error-does-not-exist' )->params( $value )->text() . "\n";
 						} else {
-							if ( $page->doDeleteArticle( wfMessage( 'createteams-delete-summary-deletion' )->inContentLanguage()->text(), false, $id, '', $wgUser ) ) {
-								$log .= '*' . wfMessage( 'createteams-delete-log-deletion-success' )->params( $value )->inContentLanguage()->text() . "\n";
+							if ( $page->doDeleteArticle( wfMessage( 'createteams-delete-summary-deletion' )->text(), false, $id, '', $wgUser ) ) {
+								$log .= '*' . wfMessage( 'createteams-delete-log-deletion-success' )->params( $value )->text() . "\n";
 							} else {
-								$e .= '*' . wfMessage( 'createteams-delete-error-deletion' )->params( $value )->inContentLanguage()->text() . "\n";
+								$e .= '*' . wfMessage( 'createteams-delete-error-deletion' )->params( $value )->text() . "\n";
 							}
 						}
 					}
 				}
 				if ( $e == '' ) {
 					$report = $report = wfMessage( 'createteams-delete-teams-report-success' )
-						->params( htmlspecialchars( $reqDeleteteam ) )->inContentLanguage()->text();
+						->params( htmlspecialchars( $reqDeleteteam ) )->text();
 				} else {
 					$report = $e;
 				}
 				$report .= '<div class="log">' . "\n" . $log . '</div>';
 
-				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-report-heading' )->text() . '===' );
 				$output->addWikiText( $report );
 			} else if ( $request->getBool( 'deletepreviewbutton' ) ) {
 				if ( $reqDeletepreviewteam == '' ) {
-					$preview = wfMessage( 'createteams-delete-teams-error-team-name-empty' )->inContentLanguage()->text();
+					$preview = wfMessage( 'createteams-delete-teams-error-team-name-empty' )->text();
 				} else {
 					foreach ( array_keys( $this->templates ) as $prefix ) {
 						$deltemplate[ $prefix ] = "Template:$prefix/" . strtolower( $reqDeletepreviewteam );
@@ -723,24 +723,24 @@ class SpecialCreateTeams extends SpecialPage
 						$id    = $page->getId();
 						$errors = $title->getUserPermissionsErrors( 'delete', $wgUser );
 						if (count($errors)) {
-							$preview .= '*' . wfMessage( 'createteams-delete-error-permission' )->params( $value )->inContentLanguage()->text() . "\n";
+							$preview .= '*' . wfMessage( 'createteams-delete-error-permission' )->params( $value )->text() . "\n";
 						} else if ( !$title->exists() ) {
-							$preview .= '*' . wfMessage( 'createteams-delete-error-does-not-exist' )->params( $value )->inContentLanguage()->text() . "\n";
+							$preview .= '*' . wfMessage( 'createteams-delete-error-does-not-exist' )->params( $value )->text() . "\n";
 						} else {
-							$preview .= '*' . wfMessage( 'createteams-delete-teams-preview-deletion' )->params( $value )->inContentLanguage()->text() . "\n";
+							$preview .= '*' . wfMessage( 'createteams-delete-teams-preview-deletion' )->params( $value )->text() . "\n";
 						}
 					}
 				}
-				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->inContentLanguage()->text() . '===' );
+				$output->addWikiText( '===' . wfMessage( 'createteams-preview-heading' )->text() . '===' );
 				$output->addWikiText( $preview );
 
 				if ( $reqDeletepreviewteam != '' ) {
 					$deleteConfirmForm = '<form name="delete-confirm-form" method="post">
 	<input type="text" name="deleteteam" value="' . $reqDeletepreviewteam . '" readonly>
-	<input type="submit" name="deletebutton" value="' . wfMessage( 'createteams-delete-teams-delete-button' )->inContentLanguage()->text() . '">
-	<p class="warning">' . wfMessage( 'createteams-delete-teams-warning-deletion' )->params( $value )->inContentLanguage()->text() . '</p>
+	<input type="submit" name="deletebutton" value="' . wfMessage( 'createteams-delete-teams-delete-button' )->text() . '">
+	<p class="warning">' . wfMessage( 'createteams-delete-teams-warning-deletion' )->params( $value )->text() . '</p>
 </form>';
-					$output->addWikiText( '===' . wfMessage( 'createteams-delete-teams-confirm-deletion-heading' )->inContentLanguage()->text() . '===' );
+					$output->addWikiText( '===' . wfMessage( 'createteams-delete-teams-confirm-deletion-heading' )->text() . '===' );
 					$output->addHTML( $deleteConfirmForm );
 				}
 			}
