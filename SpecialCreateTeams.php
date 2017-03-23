@@ -99,7 +99,7 @@ class SpecialCreateTeams extends SpecialPage
 		# Do stuff
 		# ...
 		//$wgOut->setPageTitle( "create team templates" );
-		$output->addWikiText( '==' . $this->msg( 'createteams-create-teams-heading' )->text() . '==' );
+		$output->addHTML( '<h2><span class="mw-headline" id="Create_team_templates">' . $this->msg( 'createteams-create-teams-heading' )->text() . '</span></h2>');
 		$output->addHTML( $this->msg( 'createteams-create-teams-desc' )->parse() );
 
 		global $wgUploadNavigationUrl;
@@ -250,12 +250,12 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'createpreviewbutton' ) ) {
-				$output->addWikiText( '===' . $this->msg( 'createteams-preview-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
 				$output->addWikiText( $preview );
-				$output->addWikiText( '===' . $this->msg( 'createteams-report-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
 				$output->addWikiText( $report );
 			} else {
-				$output->addWikiText( '===' . $this->msg( 'createteams-report-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -283,7 +283,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqHistoricaltimelength	= count( $reqHistoricaltime );
 		$reqHistoricaloverwrite		= $request->getBool( 'historicaloverwrite' );
 
-		$output->addWikiText( '==' . $this->msg( 'createteams-create-historicalteam-heading' )->text() . '==' );
+		$output->addHTML( '<h2><span class="mw-headline" id="Create_historical_team_templates">' . $this->msg( 'createteams-create-historicalteam-heading' )->text() . '</span></h2>' );
 
 		$historicalteamform = '<form name="createhistoricalform" id="createhistoricalform" method="post">
 <table>
@@ -406,12 +406,12 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
-				$output->addWikiText( '===' . $this->msg( 'createteams-preview-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
 				$output->addWikiText( $preview );
-				$output->addWikiText( '===' . $this->msg( 'createteams-report-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
 				$output->addWikiText( $report );
 			} else {
-				$output->addWikiText( '===' . $this->msg( 'createteams-report-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -422,7 +422,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqRedirectteam 	= $request->getText( 'redirectteam' );
 		$reqRedirectoverwrite 	= $request->getText( 'redirectoverwrite' );
 
-		$output->addWikiText( '==' . $this->msg( 'createteams-create-redirects-heading' )->text() . '==' );
+		$output->addHTML( '<h2><span class="mw-headline" id="Create_redirects">' . $this->msg( 'createteams-create-redirects-heading' )->text() . '</span></h2>' );
 		$redirectform = '<form name="redirectform" method="post">
 <table>
 	<tr>
@@ -504,10 +504,10 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'redirectpreviewbutton' ) ) {
-				$output->addWikiText( '===' . $this->msg( 'createteams-preview-heading' )->text() . '===' );
+				$output->addWikiText( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
 				$output->addWikiText( $preview );
 			} else {
-				$output->addWikiText( '===' . $this->msg( 'createteams-report-heading' )->text() . '===' );
+				$output->addWikiText( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -517,7 +517,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqMove 	= $request->getText( 'move' );
 		$reqMoveto	= $request->getText( 'moveto' );
 
-		$output->addWikiText( '==' . $this->msg( 'createteams-move-heading' )->text() . '==' );
+		$output->addHTML( '<h2><span class="mw-headline" id="Move_team_templates">' . $this->msg( 'createteams-move-heading' )->text() . '</span></h2>' );
 		$moveform = '<form name="moveform" method="post">
 <table>
 	<tr>
@@ -584,10 +584,10 @@ class SpecialCreateTeams extends SpecialPage
 			}
 			$report .= '<div class="log">' . "\n" . $log . '</div>';
 			if ( $request->getBool( 'movepreviewbutton' ) ) {
-				$output->addWikiText( '===' . $this->msg( 'createteams-preview-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
 				$output->addWikiText( $preview );
 			} else {
-				$output->addWikiText( '===' . $this->msg( 'createteams-report-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
 				$output->addWikiText( $report );
 			}
 		}
@@ -596,7 +596,7 @@ class SpecialCreateTeams extends SpecialPage
 
 		$reqView 	= $request->getText( 'view' );
 
-		$output->addWikiText( '==' . $this->msg( 'createteams-view-heading' )->text() . '==' );
+		$output->addHTML( '<h2><span class="mw-headline" id="View_team_templates">' . $this->msg( 'createteams-view-heading' )->text() . '</span></h2>' );
 		$viewform = '<form name="viewform" method="post">
 <table>
 	<tr>
@@ -635,7 +635,7 @@ class SpecialCreateTeams extends SpecialPage
 			} else {
 				$report = $e;
 			}
-			$output->addWikiText( '===' . $this->msg( 'createteams-preview-heading' )->text() . '===' );
+			$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
 			$output->addWikiText( $report );
 			$output->addWikiText( $preview );
 		}
@@ -646,7 +646,7 @@ class SpecialCreateTeams extends SpecialPage
 			// stuff only admins are allowed to see
 			$reqDeletepreviewteam = $request->getText( 'deletepreviewteam' );
 			$reqDeleteteam = $request->getText( 'deleteteam' );
-			$output->addWikiText( '==' . $this->msg( 'createteams-delete-teams-heading' )->text() . '==' );
+			$output->addHTML( '<h2><span class="mw-headline" id="Delete_team_templates">' . $this->msg( 'createteams-delete-teams-heading' )->text() . '</span></h2>' );
 			$deleteForm = '<form name="delete-form" method="post">
 <table>
 	<tr>
@@ -722,7 +722,7 @@ class SpecialCreateTeams extends SpecialPage
 						}
 					}
 				}
-				$output->addWikiText( '===' . $this->msg( 'createteams-preview-heading' )->text() . '===' );
+				$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
 				$output->addWikiText( $preview );
 
 				if ( $reqDeletepreviewteam != '' ) {
@@ -731,7 +731,7 @@ class SpecialCreateTeams extends SpecialPage
 	<input type="submit" name="deletebutton" value="' . $this->msg( 'createteams-delete-teams-delete-button' )->text() . '">
 	<p class="warning">' . $this->msg( 'createteams-delete-teams-warning-deletion' )->params( $value )->text() . '</p>
 </form>';
-					$output->addWikiText( '===' . $this->msg( 'createteams-delete-teams-confirm-deletion-heading' )->text() . '===' );
+					$output->addHTML( '<h3>' . $this->msg( 'createteams-delete-teams-confirm-deletion-heading' )->text() . '</h3>' );
 					$output->addHTML( $deleteConfirmForm );
 				}
 			}
