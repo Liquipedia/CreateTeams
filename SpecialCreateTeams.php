@@ -566,7 +566,7 @@ class SpecialCreateTeams extends SpecialPage
 								$movePage = new MovePage( $oldTitle, $newTitle );
 								$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
 								if ( $status->isOK() ) {
-									$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto )->text() ) . "\n";
+									$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
 								} else {
 									$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove )->text() ) . $status->getWikiText() . "\n";
 								}
