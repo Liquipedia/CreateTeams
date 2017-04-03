@@ -41,7 +41,6 @@ class SpecialCreateTeams extends SpecialPage
 				}
 			}
 		}
-		
 		$str .= '-->{{#ifexpr:{{#time:U|' . $reqHistoricaltime[$reqHistoricaltimelength - 1] . '}} >= {{#var:' . $reqHistoricaltemplate . 'time}}|{{' . $prefix . '/' . strtolower( $reqHistoricalteam[$reqHistoricalteamlength - 1] ) . '}}}}<!--' . "\n";
 		$str .= '--><noinclude>[[Category:Historical ' . $prefix . ' team template]]</noinclude>';
 		return $str;
