@@ -116,7 +116,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqTeamshort = $request->getText( 'teamshort' );
 		$reqOverwrite = $request->getBool( 'overwrite' );
 
-		$output->addHTML( '<form name="createform" id="createform" method="post">
+		$output->addHTML( '<form name="createform" id="createform" method="post" action="#Create_team_templates">
 <table>
 	<tr>
 		<td class="input-label"><label for="team">' . $this->msg( 'createteams-create-teams-team-label' )->text() . '</label></td>
@@ -284,7 +284,7 @@ class SpecialCreateTeams extends SpecialPage
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_historical_team_templates">' . $this->msg( 'createteams-create-historicalteam-heading' )->text() . '</span></h2>' );
 
-		$historicalteamform = '<form name="createhistoricalform" id="createhistoricalform" method="post">
+		$historicalteamform = '<form name="createhistoricalform" id="createhistoricalform" method="post" action="#Create_historical_team_templates">
 <table>
 	<tr>
 		<td> </td>
@@ -422,7 +422,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqRedirectoverwrite 	= $request->getText( 'redirectoverwrite' );
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_redirects">' . $this->msg( 'createteams-create-redirects-heading' )->text() . '</span></h2>' );
-		$redirectform = '<form name="redirectform" method="post">
+		$redirectform = '<form name="redirectform" method="post" action="#Create_redirects">
 <table>
 	<tr>
 		<td class="input-label"><label for="redirect">' . $this->msg( 'createteams-create-redirects-redirect-label' )->text() . '</label></td>
@@ -517,7 +517,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqMoveto	= $request->getText( 'moveto' );
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Move_team_templates">' . $this->msg( 'createteams-move-heading' )->text() . '</span></h2>' );
-		$moveform = '<form name="moveform" method="post">
+		$moveform = '<form name="moveform" method="post" action="#Move_team_templates">
 <table>
 	<tr>
 		<td class="input-label"><label for="move">' . $this->msg( 'createteams-move-label' )->text() . '</label></td>
@@ -596,7 +596,7 @@ class SpecialCreateTeams extends SpecialPage
 		$reqView 	= $request->getText( 'view' );
 
 		$output->addHTML( '<h2><span class="mw-headline" id="View_team_templates">' . $this->msg( 'createteams-view-heading' )->text() . '</span></h2>' );
-		$viewform = '<form name="viewform" method="post">
+		$viewform = '<form name="viewform" method="post" action="#View_team_templates">
 <table>
 	<tr>
 		<td class="input-label"><label for="view">' . $this->msg( 'createteams-view-label' )->text() . '</label></td>
@@ -646,7 +646,7 @@ class SpecialCreateTeams extends SpecialPage
 			$reqDeletepreviewteam = $request->getText( 'deletepreviewteam' );
 			$reqDeleteteam = $request->getText( 'deleteteam' );
 			$output->addHTML( '<h2><span class="mw-headline" id="Delete_team_templates">' . $this->msg( 'createteams-delete-teams-heading' )->text() . '</span></h2>' );
-			$deleteForm = '<form name="delete-form" method="post">
+			$deleteForm = '<form name="delete-form" method="post" action="#Delete_team_templates">
 <table>
 	<tr>
 		<td class="input-label"><label for="deletepreviewteam">' . $this->msg( 'createteams-delete-teams-deletepreviewteam-label' )->text() . '</label></td>
@@ -725,7 +725,7 @@ class SpecialCreateTeams extends SpecialPage
 				$output->addWikiText( $preview );
 
 				if ( $reqDeletepreviewteam != '' ) {
-					$deleteConfirmForm = '<form name="delete-confirm-form" method="post">
+					$deleteConfirmForm = '<form name="delete-confirm-form" method="post" action="#Delete_team_templates">
 	<input type="text" name="deleteteam" value="' . $reqDeletepreviewteam . '" readonly>
 	<input type="submit" name="deletebutton" value="' . $this->msg( 'createteams-delete-teams-delete-button' )->text() . '">
 	<p class="warning">' . $this->msg( 'createteams-delete-teams-warning-deletion' )->params( $value )->text() . '</p>
