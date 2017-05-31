@@ -564,11 +564,21 @@ class SpecialCreateTeams extends SpecialPage
 								$e .= '*' . $this->msg( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
 							} else {
 								$movePage = new MovePage( $oldTitle, $newTitle );
-								$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
-								if ( $status->isOK() ) {
-									$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+								$valid = $movePage->isValidMove();
+								if ( !$valid->isOK() ) {
+									$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 								} else {
-									$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
+									$permStatus = $movePage->checkPermissions( $this->getUser(), $this->msg( 'createteams-move-summary' )->text() );
+									if ( !$permStatus->isOK() ) {
+										$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
+									} else {
+										$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
+										if ( $status->isOK() ) {
+											$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+										} else {
+											$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
+										}
+									}
 								}
 							}
 						}
