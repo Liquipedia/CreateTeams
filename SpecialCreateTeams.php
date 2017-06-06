@@ -206,35 +206,39 @@ class SpecialCreateTeams extends SpecialPage
 				$preview = '{| class="createteams-preview"' . "\n";
 				foreach ( $contents as $key => $value ) {
 					$title   = Title::newFromText( $key );
-					$page    = WikiPage::factory( $title );
-					$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
-					if ( $request->getBool( 'createpreviewbutton' ) ) {
-						$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
+					if( $title == null ) {
+						$e .= '*' . $this->msg( 'createteams-create-error-bad-title' )->params( $key )->text() . "\n";
 					} else {
-						$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-						if ( !$title->exists() ) {
-							$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
-						}
-						if ( count( $errors ) ) {
-							$e .= '*' . $this->msg( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
+						$page    = WikiPage::factory( $title );
+						$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
+						if ( $request->getBool( 'createpreviewbutton' ) ) {
+							$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
 						} else {
-							if ( $title->exists() ) {
-								if ( $reqOverwrite ) {
-									$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
-									if ( $status->isOK() ) {
-										$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
+							$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+							if ( !$title->exists() ) {
+								$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
+							}
+							if ( count( $errors ) ) {
+								$e .= '*' . $this->msg( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
+							} else {
+								if ( $title->exists() ) {
+									if ( $reqOverwrite ) {
+										$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
+										if ( $status->isOK() ) {
+											$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
+										} else {
+											$e .= '*' . $this->msg( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
+										}
 									} else {
-										$e .= '*' . $this->msg( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
+										$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 									}
 								} else {
-									$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
-								}
-							} else {
-								$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
-								if ( $status->isOK() ) {
-									$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
-								} else {
-									$e .= '*' . $this->msg( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
+									$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
+									if ( $status->isOK() ) {
+										$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
+									} else {
+										$e .= '*' . $this->msg( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
+									}
 								}
 							}
 						}
@@ -359,35 +363,39 @@ class SpecialCreateTeams extends SpecialPage
 					$preview = '{| class="createteams-preview"' . "\n";
 					foreach ( $contents as $key => $value ) {
 						$title   = Title::newFromText( $key );
-						$page    = WikiPage::factory( $title );
-						$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
-						if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
-							$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
+						if( $title == null ) {
+							$e .= '*' . $this->msg( 'createteams-create-error-bad-title' )->params( $key )->text() . "\n";
 						} else {
-							$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-							if ( !$title->exists() ) {
-								$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
-							}
-							if ( count( $errors ) ) {
-								$e .= '*' . $this->msg( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
+							$page    = WikiPage::factory( $title );
+							$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
+							if ( $request->getBool( 'createhistoricalpreviewbutton' ) ) {
+								$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|' . $value . "\n";
 							} else {
-								if ( $title->exists() ) {
-									if ( $reqHistoricaloverwrite ) {
-										$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
-										if ( $status->isOK() ) {
-											$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
+								$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+								if ( !$title->exists() ) {
+									$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
+								}
+								if ( count( $errors ) ) {
+									$e .= '*' . $this->msg( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
+								} else {
+									if ( $title->exists() ) {
+										if ( $reqHistoricaloverwrite ) {
+											$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
+											if ( $status->isOK() ) {
+												$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
+											} else {
+												$e .= '*' . $this->msg( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
+											}
 										} else {
-											$e .= '*' . $this->msg( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
+											$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 										}
 									} else {
-										$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
-									}
-								} else {
-									$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
-									if ( $status->isOK() ) {
-										$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
-									} else {
-										$e .= '*' . $this->msg( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
+										$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
+										if ( $status->isOK() ) {
+											$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
+										} else {
+											$e .= '*' . $this->msg( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
+										}
 									}
 								}
 							}
@@ -460,35 +468,39 @@ class SpecialCreateTeams extends SpecialPage
 				$preview = '{| class="createteams-preview"' . "\n";
 				foreach ( $contents as $key => $value ) {
 					$title = Title::newFromText( $key );
-					$page  = WikiPage::factory( $title );
-					$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
-					if ( $request->getBool( 'redirectpreviewbutton' ) ) {
-						$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|<nowiki>' . $value . '</nowiki>' . "\n";
+					if( $title == null ) {
+						$e .= '*' . $this->msg( 'createteams-create-error-bad-title' )->params( $key )->text() . "\n";
 					} else {
-						$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
-						if ( !$title->exists() ) {
-							$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
-						}
-						if ( count( $errors ) ) {
-							$e .= '*' . $this->msg( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
+						$page  = WikiPage::factory( $title );
+						$content = \ContentHandler::makeContent( $value, $page->getTitle(), CONTENT_MODEL_WIKITEXT );
+						if ( $request->getBool( 'redirectpreviewbutton' ) ) {
+							$preview .= '|-' . "\n" . '![[' . $key . ']]' . "\n" . '|<nowiki>' . $value . '</nowiki>' . "\n";
 						} else {
-							if ( $title->exists() ) {
-								if ( $reqRedirectoverwrite ) {
-									$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
-									if ( $status->isOK() ) {
-										$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
+							$errors = $title->getUserPermissionsErrors( 'edit', $wgUser );
+							if ( !$title->exists() ) {
+								$errors = array_merge( $errors, $title->getUserPermissionsErrors( 'create', $wgUser ) );
+							}
+							if ( count( $errors ) ) {
+								$e .= '*' . $this->msg( 'createteams-create-error-permission' )->params( $key )->text() . "\n";
+							} else {
+								if ( $title->exists() ) {
+									if ( $reqRedirectoverwrite ) {
+										$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $wgUser, null );
+										if ( $status->isOK() ) {
+											$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
+										} else {
+											$e .= '*' . $this->msg( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
+										}
 									} else {
-										$e .= '*' . $this->msg( 'createteams-create-error-edit' )->params( $key )->text() . $status->getWikiText() . "\n";
+										$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 									}
 								} else {
-									$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
-								}
-							} else {
-								$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
-								if ( $status->isOK() ) {
-									$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
-								} else {
-									$e .= '*' . $this->msg( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
+									$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $wgUser, null );
+									if ( $status->isOK() ) {
+										$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
+									} else {
+										$e .= '*' . $this->msg( 'createteams-create-error-create' )->params( $key )->text() . $status->getWikiText() . "\n";
+									}
 								}
 							}
 						}
@@ -548,35 +560,44 @@ class SpecialCreateTeams extends SpecialPage
 				foreach ( array_keys( $this->templates ) as $prefix ) {
 					$oldTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMove ) );
 					$newTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMoveto ) );
-					if ( $request->getBool( 'movepreviewbutton' ) ) {
-						$preview .= '|-' . "\n" . "![[Template:$prefix/" . strtolower( $reqMove ) . ']]' . "\n" . '|&rarr;' . "\n" . "|[[Template:$prefix/" . strtolower( $reqMoveto ) . ']]' . "\n";
-					} else {
-						$errors = $oldTitle->getUserPermissionsErrors( 'move', $wgUser );
-						if ( !$oldTitle->exists() || !$newTitle->exists() ) {
-							$errors = array_merge( $errors, $oldTitle->getUserPermissionsErrors( 'create', $wgUser ) );
+					if( $oldTitle == null || $newTitle == null ) {
+						if( $oldTitle == null ) {
+							$e .= '*' . $this->msg( 'createteams-move-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 						}
-						if ( count( $errors ) ) {
-							$e .= '*' . $this->msg( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove )->text() ) . "\n";
+						if( $newTitle == null ) {
+							$e .= '*' . $this->msg( 'createteams-move-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+						}
+					} else {
+						if( $request->getBool( 'movepreviewbutton' ) ) {
+							$preview .= '|-' . "\n" . "![[Template:$prefix/" . strtolower( $reqMove ) . ']]' . "\n" . '|&rarr;' . "\n" . "|[[Template:$prefix/" . strtolower( $reqMoveto ) . ']]' . "\n";
 						} else {
-							if ( !$oldTitle->exists() ) {
-								$e .= '*' . $this->msg( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
-							} elseif ( $newTitle->exists() ) {
-								$e .= '*' . $this->msg( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+							$errors = $oldTitle->getUserPermissionsErrors( 'move', $wgUser );
+							if ( !$oldTitle->exists() || !$newTitle->exists() ) {
+								$errors = array_merge( $errors, $oldTitle->getUserPermissionsErrors( 'create', $wgUser ) );
+							}
+							if ( count( $errors ) ) {
+								$e .= '*' . $this->msg( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 							} else {
-								$movePage = new MovePage( $oldTitle, $newTitle );
-								$valid = $movePage->isValidMove();
-								if ( !$valid->isOK() ) {
-									$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
+								if ( !$oldTitle->exists() ) {
+									$e .= '*' . $this->msg( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
+								} elseif ( $newTitle->exists() ) {
+									$e .= '*' . $this->msg( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
 								} else {
-									$permStatus = $movePage->checkPermissions( $this->getUser(), $this->msg( 'createteams-move-summary' )->text() );
-									if ( !$permStatus->isOK() ) {
+									$movePage = new MovePage( $oldTitle, $newTitle );
+									$valid = $movePage->isValidMove();
+									if ( !$valid->isOK() ) {
 										$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 									} else {
-										$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
-										if ( $status->isOK() ) {
-											$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+										$permStatus = $movePage->checkPermissions( $this->getUser(), $this->msg( 'createteams-move-summary' )->text() );
+										if ( !$permStatus->isOK() ) {
+											$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 										} else {
-											$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
+											$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
+											if ( $status->isOK() ) {
+												$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+											} else {
+												$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
+											}
 										}
 									}
 								}
@@ -630,11 +651,15 @@ class SpecialCreateTeams extends SpecialPage
 				$preview = '{| class="createteams-preview"' . "\n";
 				foreach ( array_keys( $this->templates ) as $prefix ) {
 					$title = Title::newFromText( "Template:$prefix/" . strtolower( $reqView ) );
-					$page  = WikiPage::factory( $title );
-					if ( $page !== null && $page->exists() ) {
-						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|{{Template:' . $prefix . '/' . strtolower( $reqView ) . '}}' . "\n";
+					if( $title == null ) {
+						$e = $this->msg( 'createteams-view-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqView ) )->text();
 					} else {
-						$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|' . $this->msg( 'createteams-view-error-does-not-exist' )->text() . "\n";
+						$page  = WikiPage::factory( $title );
+						if ( $page !== null && $page->exists() ) {
+							$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|{{Template:' . $prefix . '/' . strtolower( $reqView ) . '}}' . "\n";
+						} else {
+							$preview .= '|-' . "\n" . '![[Template:' . $prefix . '/' . strtolower( $reqView ) . ']]' . "\n" . '|' . $this->msg( 'createteams-view-error-does-not-exist' )->text() . "\n";
+						}
 					}
 				}
 				$preview .= '|}';
@@ -685,18 +710,22 @@ class SpecialCreateTeams extends SpecialPage
 					}
 					foreach ( $deltemplate as $value ) {
 						$title = Title::newFromText( $value );
-						$page  = WikiPage::factory( $title );
-						$id    = $page->getId();
-						$errors = $title->getUserPermissionsErrors( 'delete', $wgUser );
-						if (count($errors)) {
-							$e .= '*' . $this->msg( 'createteams-delete-error-permission' )->params( $value )->text() . "\n";
-						} else if ( !$title->exists() ) {
-							$e .= '*' . $this->msg( 'createteams-delete-error-does-not-exist' )->params( $value )->text() . "\n";
+						if( $title == null ) {
+							$e = $this->msg( 'createteams-delete-error-bad-title' )->params( $value )->text();
 						} else {
-							if ( $page->doDeleteArticle( $this->msg( 'createteams-delete-summary-deletion' )->text(), false, $id, '', $wgUser ) ) {
-								$log .= '*' . $this->msg( 'createteams-delete-log-deletion-success' )->params( $value )->text() . "\n";
+							$page  = WikiPage::factory( $title );
+							$id    = $page->getId();
+							$errors = $title->getUserPermissionsErrors( 'delete', $wgUser );
+							if (count($errors)) {
+								$e .= '*' . $this->msg( 'createteams-delete-error-permission' )->params( $value )->text() . "\n";
+							} else if ( !$title->exists() ) {
+								$e .= '*' . $this->msg( 'createteams-delete-error-does-not-exist' )->params( $value )->text() . "\n";
 							} else {
-								$e .= '*' . $this->msg( 'createteams-delete-error-deletion' )->params( $value )->text() . "\n";
+								if ( $page->doDeleteArticle( $this->msg( 'createteams-delete-summary-deletion' )->text(), false, $id, '', $wgUser ) ) {
+									$log .= '*' . $this->msg( 'createteams-delete-log-deletion-success' )->params( $value )->text() . "\n";
+								} else {
+									$e .= '*' . $this->msg( 'createteams-delete-error-deletion' )->params( $value )->text() . "\n";
+								}
 							}
 						}
 					}
@@ -719,15 +748,19 @@ class SpecialCreateTeams extends SpecialPage
 					}
 					foreach ( $deltemplate as $value ) {
 						$title = Title::newFromText( $value );
-						$page  = WikiPage::factory( $title );
-						$id    = $page->getId();
-						$errors = $title->getUserPermissionsErrors( 'delete', $wgUser );
-						if (count($errors)) {
-							$preview .= '*' . $this->msg( 'createteams-delete-error-permission' )->params( $value )->text() . "\n";
-						} else if ( !$title->exists() ) {
-							$preview .= '*' . $this->msg( 'createteams-delete-error-does-not-exist' )->params( $value )->text() . "\n";
+						if( $title == null ) {
+							$e = $this->msg( 'createteams-delete-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqDeletepreviewteam ) )->text();
 						} else {
-							$preview .= '*' . $this->msg( 'createteams-delete-teams-preview-deletion' )->params( $value )->text() . "\n";
+							$page  = WikiPage::factory( $title );
+							$id    = $page->getId();
+							$errors = $title->getUserPermissionsErrors( 'delete', $wgUser );
+							if (count($errors)) {
+								$preview .= '*' . $this->msg( 'createteams-delete-error-permission' )->params( $value )->text() . "\n";
+							} else if ( !$title->exists() ) {
+								$preview .= '*' . $this->msg( 'createteams-delete-error-does-not-exist' )->params( $value )->text() . "\n";
+							} else {
+								$preview .= '*' . $this->msg( 'createteams-delete-teams-preview-deletion' )->params( $value )->text() . "\n";
+							}
 						}
 					}
 				}
