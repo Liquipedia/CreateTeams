@@ -71,16 +71,18 @@ class SpecialCreateTeams extends SpecialPage
 				'href' => 'Create_redirects',
 				'text' => $this->msg( 'createteams-create-redirects-heading' )->text()
 			),
-			array(
+		);
+		if( $wgUser->isAllowed( 'move' ) ) {
+			$toc[] = array(
 				'href' => 'Move_team_templates',
 				'text' => $this->msg( 'createteams-move-heading' )->text()
-			),
-			array(
-				'href' => 'View_team_templates',
-				'text' => $this->msg( 'createteams-view-heading' )->text()
-			),
+			);
+		}
+		$toc[] = array(
+			'href' => 'View_team_templates',
+			'text' => $this->msg( 'createteams-view-heading' )->text()
 		);
-		if ( $wgUser->isAllowed( 'delete' ) ) {
+		if( $wgUser->isAllowed( 'delete' ) ) {
 			$toc[] = array(
 				'href' => 'Delete_team_templates',
 				'text' => $this->msg( 'createteams-delete-teams-heading' )->text()
@@ -525,78 +527,80 @@ class SpecialCreateTeams extends SpecialPage
 
 		// Moves
 
-		$reqMove 	= $request->getText( 'move' );
-		$reqMoveto	= $request->getText( 'moveto' );
+		if( $wgUser->isAllowed( 'move' ) ) {
+			$reqMove 	= $request->getText( 'move' );
+			$reqMoveto	= $request->getText( 'moveto' );
 
-		$output->addHTML( '<h2><span class="mw-headline" id="Move_team_templates">' . $this->msg( 'createteams-move-heading' )->text() . '</span></h2>' );
-		$moveform = '<form name="moveform" method="post" action="#Move_team_templates">
-<table>
-	<tr>
-		<td class="input-label"><label for="move">' . $this->msg( 'createteams-move-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="move" id="move" value="' . $reqMove . '"></td>
-		<td class="input-helper">' . $this->msg( 'createteams-move-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td class="input-label"><label for="moveto">' . $this->msg( 'createteams-move-moveto-label' )->text() . '</label></td>
-		<td class="input-container"><input type="text" name="moveto" id="moveto" value="' . $reqMoveto . '"></td>
-		<td class="input-helper">' . $this->msg( 'createteams-move-moveto-helper' )->text() . '</td>
-	</tr>
-	<tr>
-		<td> </td>
-		<td colspan="2">
-			<input type="submit" name="movebutton" value="' . $this->msg( 'createteams-move-button' )->text() . '"> 
-			<input type="submit" name="movepreviewbutton" value="' . $this->msg( 'createteams-move-preview-button' )->text() . '">
-		</td>
-	</tr>
-</table>
-</form>';
+			$output->addHTML( '<h2><span class="mw-headline" id="Move_team_templates">' . $this->msg( 'createteams-move-heading' )->text() . '</span></h2>' );
+			$moveform = '<form name="moveform" method="post" action="#Move_team_templates">
+	<table>
+		<tr>
+			<td class="input-label"><label for="move">' . $this->msg( 'createteams-move-label' )->text() . '</label></td>
+			<td class="input-container"><input type="text" name="move" id="move" value="' . $reqMove . '"></td>
+			<td class="input-helper">' . $this->msg( 'createteams-move-helper' )->text() . '</td>
+		</tr>
+		<tr>
+			<td class="input-label"><label for="moveto">' . $this->msg( 'createteams-move-moveto-label' )->text() . '</label></td>
+			<td class="input-container"><input type="text" name="moveto" id="moveto" value="' . $reqMoveto . '"></td>
+			<td class="input-helper">' . $this->msg( 'createteams-move-moveto-helper' )->text() . '</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td colspan="2">
+				<input type="submit" name="movebutton" value="' . $this->msg( 'createteams-move-button' )->text() . '"> 
+				<input type="submit" name="movepreviewbutton" value="' . $this->msg( 'createteams-move-preview-button' )->text() . '">
+			</td>
+		</tr>
+	</table>
+	</form>';
 
-		$output->addHTML( $moveform );
-		if ( $request->getBool( 'movebutton' ) || $request->getBool( 'movepreviewbutton' ) ) {
-			if ( $reqMove == '' || $reqMoveto == '' ) {
-				$e = $this->msg( 'createteams-move-error-source-or-destination-empty' )->text();
-			} else {
-				$preview = '{| class="createteams-preview"' . "\n";
-				foreach ( array_keys( $this->templates ) as $prefix ) {
-					$oldTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMove ) );
-					$newTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMoveto ) );
-					if( $oldTitle == null || $newTitle == null ) {
-						if( $oldTitle == null ) {
-							$e .= '*' . $this->msg( 'createteams-move-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
-						}
-						if( $newTitle == null ) {
-							$e .= '*' . $this->msg( 'createteams-move-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
-						}
-					} else {
-						if( $request->getBool( 'movepreviewbutton' ) ) {
-							$preview .= '|-' . "\n" . "![[Template:$prefix/" . strtolower( $reqMove ) . ']]' . "\n" . '|&rarr;' . "\n" . "|[[Template:$prefix/" . strtolower( $reqMoveto ) . ']]' . "\n";
-						} else {
-							$errors = $oldTitle->getUserPermissionsErrors( 'move', $wgUser );
-							if ( !$oldTitle->exists() || !$newTitle->exists() ) {
-								$errors = array_merge( $errors, $oldTitle->getUserPermissionsErrors( 'create', $wgUser ) );
+			$output->addHTML( $moveform );
+			if ( $request->getBool( 'movebutton' ) || $request->getBool( 'movepreviewbutton' ) ) {
+				if ( $reqMove == '' || $reqMoveto == '' ) {
+					$e = $this->msg( 'createteams-move-error-source-or-destination-empty' )->text();
+				} else {
+					$preview = '{| class="createteams-preview"' . "\n";
+					foreach ( array_keys( $this->templates ) as $prefix ) {
+						$oldTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMove ) );
+						$newTitle = Title::newFromText( "Template:$prefix/" . strtolower( $reqMoveto ) );
+						if( $oldTitle == null || $newTitle == null ) {
+							if( $oldTitle == null ) {
+								$e .= '*' . $this->msg( 'createteams-move-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 							}
-							if ( count( $errors ) ) {
-								$e .= '*' . $this->msg( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
+							if( $newTitle == null ) {
+								$e .= '*' . $this->msg( 'createteams-move-error-bad-title' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+							}
+						} else {
+							if( $request->getBool( 'movepreviewbutton' ) ) {
+								$preview .= '|-' . "\n" . "![[Template:$prefix/" . strtolower( $reqMove ) . ']]' . "\n" . '|&rarr;' . "\n" . "|[[Template:$prefix/" . strtolower( $reqMoveto ) . ']]' . "\n";
 							} else {
-								if ( !$oldTitle->exists() ) {
-									$e .= '*' . $this->msg( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
-								} elseif ( $newTitle->exists() ) {
-									$e .= '*' . $this->msg( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+								$errors = $oldTitle->getUserPermissionsErrors( 'move', $wgUser );
+								if ( !$oldTitle->exists() || !$newTitle->exists() ) {
+									$errors = array_merge( $errors, $oldTitle->getUserPermissionsErrors( 'create', $wgUser ) );
+								}
+								if ( count( $errors ) ) {
+									$e .= '*' . $this->msg( 'createteams-move-error-permission' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 								} else {
-									$movePage = new MovePage( $oldTitle, $newTitle );
-									$valid = $movePage->isValidMove();
-									if ( !$valid->isOK() ) {
-										$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
+									if ( !$oldTitle->exists() ) {
+										$e .= '*' . $this->msg( 'createteams-move-error-source-does-not-exists' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
+									} elseif ( $newTitle->exists() ) {
+										$e .= '*' . $this->msg( 'createteams-move-error-target-already-exists' )->params( "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
 									} else {
-										$permStatus = $movePage->checkPermissions( $this->getUser(), $this->msg( 'createteams-move-summary' )->text() );
-										if ( !$permStatus->isOK() ) {
+										$movePage = new MovePage( $oldTitle, $newTitle );
+										$valid = $movePage->isValidMove();
+										if ( !$valid->isOK() ) {
 											$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 										} else {
-											$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
-											if ( $status->isOK() ) {
-												$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+											$permStatus = $movePage->checkPermissions( $this->getUser(), $this->msg( 'createteams-move-summary' )->text() );
+											if ( !$permStatus->isOK() ) {
+												$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . "\n";
 											} else {
-												$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
+												$status = $movePage->move( $wgUser, $this->msg( 'createteams-move-summary' )->text(), false );
+												if ( $status->isOK() ) {
+													$log .= '*' . $this->msg( 'createteams-move-log-create-success' )->params( "Template:$prefix/" . strtolower( $reqMove ), "Template:$prefix/" . strtolower( $reqMoveto ) )->text() . "\n";
+												} else {
+													$e .= '*' . $this->msg( 'createteams-move-error-move' )->params( "Template:$prefix/" . strtolower( $reqMove ) )->text() . $status->getWikiText() . "\n";
+												}
 											}
 										}
 									}
@@ -604,21 +608,21 @@ class SpecialCreateTeams extends SpecialPage
 							}
 						}
 					}
+					$preview .= '|}';
 				}
-				$preview .= '|}';
-			}
-			if ( $e == '' ) {
-				$report = $this->msg( 'createteams-move-report-success' )->params( array( htmlspecialchars( $reqMove ), htmlspecialchars( $reqMoveto ) ) )->text();
-			} else {
-				$report = $e;
-			}
-			$report .= '<div class="log">' . "\n" . $log . '</div>';
-			if ( $request->getBool( 'movepreviewbutton' ) ) {
-				$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
-				$output->addWikiText( $preview );
-			} else {
-				$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
-				$output->addWikiText( $report );
+				if ( $e == '' ) {
+					$report = $this->msg( 'createteams-move-report-success' )->params( array( htmlspecialchars( $reqMove ), htmlspecialchars( $reqMoveto ) ) )->text();
+				} else {
+					$report = $e;
+				}
+				$report .= '<div class="log">' . "\n" . $log . '</div>';
+				if ( $request->getBool( 'movepreviewbutton' ) ) {
+					$output->addHTML( '<h3>' . $this->msg( 'createteams-preview-heading' )->text() . '</h3>' );
+					$output->addWikiText( $preview );
+				} else {
+					$output->addHTML( '<h3>' . $this->msg( 'createteams-report-heading' )->text() . '</h3>' );
+					$output->addWikiText( $report );
+				}
 			}
 		}
 
@@ -664,7 +668,7 @@ class SpecialCreateTeams extends SpecialPage
 				}
 				$preview .= '|}';
 			}
-			if ( $e == '' ) {
+			if( $e == '' ) {
 				$report = $this->msg( 'createteams-view-report-success' )->params( array( htmlspecialchars( $reqView ) ) )->text();
 			} else {
 				$report = $e;
@@ -676,7 +680,7 @@ class SpecialCreateTeams extends SpecialPage
 
 		// Deletions
 
-		if ( $wgUser->isAllowed( 'delete' ) ) {
+		if( $wgUser->isAllowed( 'delete' ) ) {
 			// stuff only admins are allowed to see
 			$reqDeletepreviewteam = $request->getText( 'deletepreviewteam' );
 			$reqDeleteteam = $request->getText( 'deleteteam' );
