@@ -53,6 +53,7 @@ class SpecialCreateTeams extends SpecialPage
 		}
 		$output = $this->getOutput();
 		$user = $this->getUser();
+		$config = $this->getConfig();
 		$this->setHeaders();
 		$output->addModules( 'ext.createteams.SpecialPage' );
 		$report = ''; $e = ''; $log = ''; $preview = '';
@@ -103,9 +104,9 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_team_templates">' . $this->msg( 'createteams-create-teams-heading' )->text() . '</span></h2>');
 		$output->addHTML( $this->msg( 'createteams-create-teams-desc' )->parse() );
 
-		global $wgUploadNavigationUrl;
-		if($wgUploadNavigationUrl) {
-			$uploadMessage = $this->msg( 'createteams-create-teams-image-helper-remote' )->params( $wgUploadNavigationUrl )->parse();
+		$uploadNavigationUrl = $config->get( 'UploadNavigationUrl' );;
+		if( $uploadNavigationUrl ) {
+			$uploadMessage = $this->msg( 'createteams-create-teams-image-helper-remote' )->params( $uploadNavigationUrl )->parse();
 		} else {
 			$uploadMessage = $this->msg( 'createteams-create-teams-image-helper' )->parse();
 		}
