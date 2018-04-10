@@ -4,17 +4,15 @@ class SpecialCreateTeams extends SpecialPage
 {
 	private $templates;
 
-	function __construct()
-	{
+	public function __construct() {
 		parent::__construct( 'CreateTeams', 'edit' );
 	}
 
-	function getGroupName() {
+	public function getGroupName() {
 		return 'liquipedia';
 	}
 
-	function getTemplates()
-	{
+	private function getTemplates() {
 		$json = json_decode( 
 			wfMessage( 'createteams-templates.json' )->inContentLanguage()->plain(), 
 			true
@@ -22,7 +20,7 @@ class SpecialCreateTeams extends SpecialPage
 		$this->templates = $json['templates'];
 	}
 
-	function makeTeamTemplate( $template, $vars ) {
+	private function makeTeamTemplate( $template, $vars ) {
 		$str = $template['wikitext'];
 		foreach( $vars as $tag => $replacement ) {
 			$str = str_replace( '{$' . $tag. '$}', $replacement, $str );
@@ -31,7 +29,7 @@ class SpecialCreateTeams extends SpecialPage
 		return $str;
 	}
 
-	function makeHistoricalTeamTemplate( $prefix, $reqHistoricaltemplate, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength ) {
+	private function makeHistoricalTeamTemplate( $prefix, $reqHistoricaltemplate, $reqHistoricalteam, $reqHistoricaltime, $reqHistoricalteamlength, $reqHistoricaltimelength ) {
 		$str = '{{#vardefine:' . $reqHistoricaltemplate . 'time|{{#time:U|{{{1|{{#replace:{{#replace:{{#explode: {{#var:date|{{#var:edate|{{#var:sdate|{{CURRENTYEAR}}-{{CURRENTMONTH}}-{{CURRENTDAY2}}}}}}}}|<}}|-XX|}}|-??|}}}}}}}}}<!-- this variable name needs to be unique --><!--' . "\n";
 		$str .= '-->{{#ifexpr:{{#time:U|' . $reqHistoricaltime[0] . '}} < {{#var:' . $reqHistoricaltemplate . 'time}}|{{' . $prefix . '/' . strtolower( $reqHistoricalteam[0] ) . '}}}}<!--' . "\n";
 			if( $reqHistoricalteamlength > 2) {
@@ -46,7 +44,7 @@ class SpecialCreateTeams extends SpecialPage
 		return $str;
 	}
 
-	function execute( $par ) {
+	public function execute( $par ) {
 		if( !$this->userCanExecute( $this->getUser() ) ) {
 			$this->displayRestrictionError();
 			return;
@@ -104,7 +102,7 @@ class SpecialCreateTeams extends SpecialPage
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_team_templates">' . $this->msg( 'createteams-create-teams-heading' )->text() . '</span></h2>');
 		$output->addHTML( $this->msg( 'createteams-create-teams-desc' )->parse() );
 
-		$uploadNavigationUrl = $config->get( 'UploadNavigationUrl' );;
+		$uploadNavigationUrl = $config->get( 'UploadNavigationUrl' );
 		if( $uploadNavigationUrl ) {
 			$uploadMessage = $this->msg( 'createteams-create-teams-image-helper-remote' )->params( $uploadNavigationUrl )->parse();
 		} else {
@@ -169,7 +167,6 @@ class SpecialCreateTeams extends SpecialPage
 			$imagetitle = Title::newFromText( $wikiimage );
 			$imagewikipage = new WikiFilePage( $imagetitle );
 			$imagefile = $imagewikipage->getFile();
-			$test = $imagefile->exists();
 
 			if( $reqTeam == '' ) {
 				$e = $this->msg( 'createteams-create-teams-error-team-name-empty' )->text();
