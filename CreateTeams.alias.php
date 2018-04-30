@@ -1,13 +1,13 @@
 <?php
+
 /**
  * Aliases for myextension
  *
  * @file
  * @ingroup Extensions
  */
- 
 $specialPageAliases = array();
- 
+
 /** English
  * @author hainrich, Chapatiyaq
  */
