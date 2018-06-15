@@ -6,11 +6,11 @@
  * @file
  * @ingroup Extensions
  */
-$specialPageAliases = array();
+$specialPageAliases = [];
 
 /** English
  * @author hainrich, Chapatiyaq
  */
-$specialPageAliases[ 'en' ] = array(
-	'CreateTeams' => array( 'CreateTeams', 'CreateTeams' ),
-);
+$specialPageAliases[ 'en' ] = [
+	'CreateTeams' => [ 'CreateTeams', 'Createteams' ],
+];
