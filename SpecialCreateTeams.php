@@ -224,7 +224,7 @@ class SpecialCreateTeams extends SpecialPage {
 							} else {
 								if ( $title->exists() ) {
 									if ( $reqOverwrite ) {
-										$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $user, null );
+										$status = $page->doEditContent( $content, $this->msg( 'createteams-create-summary-edit' )->text(), EDIT_UPDATE, false, $user, null );
 										if ( $status->isOK() ) {
 											$log .= '*' . $this->msg( 'createteams-create-log-edit-success' )->params( $key )->text() . "\n";
 										} else {
