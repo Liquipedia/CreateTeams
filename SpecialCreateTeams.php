@@ -234,7 +234,7 @@ class SpecialCreateTeams extends SpecialPage {
 										$e .= '*' . $this->msg( 'createteams-create-error-edit-already-exists' )->params( $key )->text() . "\n";
 									}
 								} else {
-									$status = $page->doeditcontent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $user, null );
+									$status = $page->doEditContent( $content, $this->msg( 'createteams-create-summary-creation' )->text(), EDIT_NEW, false, $user, null );
 									if ( $status->isOK() ) {
 										$log .= '*' . $this->msg( 'createteams-create-log-create-success' )->params( $key )->text() . "\n";
 									} else {
