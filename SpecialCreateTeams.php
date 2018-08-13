@@ -333,7 +333,7 @@ class SpecialCreateTeams extends SpecialPage {
 		}
 		$historicalteamform .= '<tr id="historicaloverwriteline">
 		<td class="input-label"><label for="historicaloverwrite">' . $this->msg( 'createteams-create-teams-historicaloverwrite-label' )->text() . '</label></td>
-		<td><input type="checkbox" name="historicaloverwrite" id="historicaloverwrite"' . ( $reqHistoricaloverwrite ? ' checked=""' : '' ) . '"></td>
+		<td><input type="checkbox" name="historicaloverwrite" id="historicaloverwrite"' . ( $reqHistoricaloverwrite ? ' checked=""' : '' ) . '></td>
 		<td class="input-helper">' . $this->msg( 'createteams-create-teams-historicaloverwrite-helper' )->text() . '</td>
 	</tr>
 	<tr>
@@ -445,7 +445,7 @@ class SpecialCreateTeams extends SpecialPage {
 	</tr>
 	<tr>
 		<td class="input-label"><label for="redirectoverwrite">' . $this->msg( 'createteams-create-redirects-redirectoverwrite-label' )->text() . '</label></td>
-		<td><input type="checkbox" name="redirectoverwrite" id="redirectoverwrite"' . ( $reqRedirectoverwrite ? ' checked=""' : '' ) . '"></td>
+		<td><input type="checkbox" name="redirectoverwrite" id="redirectoverwrite"' . ( $reqRedirectoverwrite ? ' checked=""' : '' ) . '></td>
 		<td class="input-helper">' . $this->msg( 'createteams-create-redirects-redirectoverwrite-helper' )->text() . '</td>
 	</tr>
 	<tr>
