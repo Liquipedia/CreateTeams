@@ -147,7 +147,7 @@ class SpecialCreateTeams extends SpecialPage {
 	</tr>
 	<tr>
 		<td class="input-label"><label for="overwrite">' . $this->msg( 'createteams-create-teams-overwrite-label' )->text() . '</label></td>
-		<td><input type="checkbox" name="overwrite" id="overwrite"' . ( $reqOverwrite ? ' checked=""' : '' ) . '"></td>
+		<td><input type="checkbox" name="overwrite" id="overwrite"' . ( $reqOverwrite ? ' checked=""' : '' ) . '></td>
 		<td class="input-helper">' . $this->msg( 'createteams-create-teams-overwrite-helper' )->text() . '</td>
 	</tr>
 	<tr>
