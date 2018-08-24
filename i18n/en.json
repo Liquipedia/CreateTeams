@@ -117,5 +117,6 @@
 	"createteams-create-teams-historicaltemplate-info": "Put the teams and dates so that the most recent version is up top.",
 	"createteams-create-error-historical-number-error": "The number of teams do not correspond to the number of dates. There must be one more team than date.",
 
-	"specialpages-group-liquipedia": "Liquipedia"
+	"specialpages-group-liquipedia": "Liquipedia",
+	"lpextmenu-createteams": "Team Templates"
 }

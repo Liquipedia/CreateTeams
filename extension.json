@@ -19,13 +19,19 @@
 		]
 	},
 	"AutoloadClasses": {
-		"SpecialCreateTeams": "SpecialCreateTeams.php"
+		"SpecialCreateTeams": "SpecialCreateTeams.php",
+		"Liquipedia\\CreateTeams\\Hooks": "CreateTeamsHooks.php"
 	},
 	"ExtensionMessagesFiles": {
-		"CreateTeamsAlias": "CreateTeams.alias.php"
+		"CreateTeamsAlias": "CreateTeamsAlias.php"
 	},
 	"SpecialPages": {
 		"CreateTeams": "SpecialCreateTeams"
+	},
+	"Hooks": {
+		"LPExtensionMenu": [
+			"Liquipedia\\CreateTeams\\Hooks::onLPExtensionMenu"
+		]
 	},
 	"ResourceModules": {
 		"ext.createteams.SpecialPage": {
