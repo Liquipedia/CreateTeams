@@ -5,7 +5,9 @@ namespace Liquipedia\CreateTeams;
 class Hooks {
 
 	public static function onLPExtensionMenu( &$extensionsMenu, $skin ) {
-		$extensionsMenu[ 'createteams' ] = 'CreateTeams';
+		if ( $skin->getUser()->isAllowed( 'edit' ) ) {
+			$extensionsMenu[ 'createteams' ] = 'CreateTeams';
+		}
 	}
 
 }
