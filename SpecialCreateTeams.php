@@ -48,6 +48,10 @@ class SpecialCreateTeams extends SpecialPage {
 			$this->displayRestrictionError();
 			return;
 		}
+		if ( $this->msg( 'createteams-disabled' )->text() == 'yes' ) {
+			$this->getOutput()->addWikiText( '<div class="error">{{int:createteams-disabled-text}}</div>' );
+			return;
+		}
 		$output = $this->getOutput();
 		$user = $this->getUser();
 		$config = $this->getConfig();
@@ -283,8 +287,8 @@ class SpecialCreateTeams extends SpecialPage {
 			}
 			$reqHistoricaltime = array_values( $reqHistoricaltime );
 		}
-		$reqHistoricalteamlength = count( $reqHistoricalteam );
-		$reqHistoricaltimelength = count( $reqHistoricaltime );
+		$reqHistoricalteamlength = is_array( $reqHistoricalteam ) ? count( $reqHistoricalteam ) : 0;
+		$reqHistoricaltimelength = is_array( $reqHistoricaltime ) ? count( $reqHistoricaltime ) : 0;
 		$reqHistoricaloverwrite = $request->getBool( 'historicaloverwrite' );
 
 		$output->addHTML( '<h2><span class="mw-headline" id="Create_historical_team_templates">' . $this->msg( 'createteams-create-historicalteam-heading' )->text() . '</span></h2>' );

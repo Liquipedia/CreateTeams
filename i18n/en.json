@@ -118,5 +118,7 @@
 	"createteams-create-error-historical-number-error": "The number of teams do not correspond to the number of dates. There must be one more team than date.",
 
 	"specialpages-group-liquipedia": "Liquipedia",
-	"lpextmenu-createteams": "Team Templates"
+	"lpextmenu-createteams": "Team Templates",
+
+	"createteams-disabled-text": "This extension has been disabled"
 }
