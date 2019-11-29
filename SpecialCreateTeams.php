@@ -48,10 +48,6 @@ class SpecialCreateTeams extends SpecialPage {
 			$this->displayRestrictionError();
 			return;
 		}
-		if ( $this->msg( 'createteams-disabled' )->text() == 'yes' ) {
-			$this->getOutput()->addWikiText( '<div class="error">{{int:createteams-disabled-text}}</div>' );
-			return;
-		}
 		$output = $this->getOutput();
 		$user = $this->getUser();
 		$config = $this->getConfig();
